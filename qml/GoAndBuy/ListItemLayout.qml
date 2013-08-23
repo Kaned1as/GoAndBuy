@@ -7,7 +7,7 @@ Component {
     Item {
         anchors.left: parent.left
         anchors.right: parent.right
-        height: 60
+        height: 40 * mainWindow.height * 0.0025
         Rectangle {
             anchors.fill: parent
             color: "gray"
@@ -22,12 +22,11 @@ Component {
                 CheckBox {
                     id: buyItemCheckBox
                     Layout.alignment: Qt.AlignVCenter
-
                     style: CheckBoxStyle {
                         indicator: Rectangle {
-                            implicitWidth: 20
-                            implicitHeight: 20
-                            radius: 3
+                            implicitWidth: mainWindow.width / 15
+                            implicitHeight: mainWindow.width / 15
+                            radius: mainWindow.width / 100
                             border.color: control.activeFocus ? "darkblue" : "gray"
                             border.width: 1
                             Rectangle {
@@ -39,6 +38,13 @@ Component {
                                 anchors.fill: parent
                             }
                         }
+                    }
+
+                    onCheckedChanged: {
+                        if(checked)
+                            sampleLM.move(index, sampleLM.count - 1, 1)
+                        else
+                            sampleLM.move(index, 0, 1)
                     }
                 }
 

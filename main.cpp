@@ -1,6 +1,7 @@
 #include <QtGui/QGuiApplication>
 #include <QTranslator>
 #include <QLibraryInfo>
+#include <QQmlContext>
 #include "qtquick2applicationviewer.h"
 
 int main(int argc, char *argv[])
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
     QtQuick2ApplicationViewer viewer;
     viewer.setMainQmlFile(QStringLiteral("qml/GoAndBuy/main.qml"));
     viewer.showExpanded();
+
 
     return app.exec();
 }
