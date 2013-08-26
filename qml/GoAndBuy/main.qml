@@ -34,13 +34,17 @@ Rectangle {
                     ListView {
                         Layout.fillHeight: true
                         Layout.fillWidth: true
-                        model: sampleLM
+                        model: ItemHandler
                         delegate: lil
                         spacing: 5
                         clip: true
                         add: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutBounce; from: mainWindow.height; duration: 1000 } }
                         move: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
+                        remove: Transition { NumberAnimation { property: "x"; to: Math.abs(x) / x * mainWindow.width; duration: 500 } }
+                        removeDisplaced: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
                         moveDisplaced:  Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
+
+                        onCountChanged: saveItemsButton.visible = true;
                     }
 
                     TextField {
@@ -48,25 +52,41 @@ Rectangle {
                         placeholderText: qsTr("New item name")
                         Layout.fillWidth: true
                         style: TextFieldStyle {
-                                textColor: "black"
-                                background: Rectangle {
-                                    radius: mainWindow.width / 100
-                                    implicitHeight: mainWindow.height / 16
-                                    border.color: "#333"
-                                    border.width: 1
+                            textColor: "black"
+                            background: Rectangle {
+                                radius: mainWindow.width / 100
+                                implicitHeight: mainWindow.height / 16
+                                border.color: "#333"
+                                border.width: 1
+                            }
+                        }
+
+                        onAccepted: addBuyItemButton.clicked()
+                    }
+                    RowLayout
+                    {
+                        Button {
+                            id: addBuyItemButton
+                            text: qsTr("Add")
+                            Layout.fillWidth: true
+                            height: mainWindow.height / 10
+                            onClicked: {
+                                if(newBuyItemText.text !== "") {
+                                    ItemHandler.addBuyItem(newBuyItemText.text)
+                                    newBuyItemText.text = ""
                                 }
                             }
-                    }
+                        }
 
-                    Button {
-                        id: addBuyItemButton
-                        text: qsTr("Add")
-                        Layout.fillWidth: true
-                        height: mainWindow.height / 12
-                        onClicked: {
-                            if(newBuyItemText.text !== "") {
-                                sampleLM.append({"title" : newBuyItemText.text});
-                                newBuyItemText.text = "";
+                        Button {
+                            id: saveItemsButton
+                            visible: false
+                            text: qsTr("Save Items")
+                            Layout.fillWidth: true
+                            height: mainWindow.height / 10
+                            onClicked: {
+                                visible = false;
+                                ItemHandler.saveData();
                             }
                         }
                     }
@@ -84,16 +104,5 @@ Rectangle {
         }
     }
 
-    ListModel {
-        id: sampleLM
-        ListElement {
-            title: "first"
-        }
-        ListElement {
-            title: "second"
-        }
-        ListElement {
-            title: "third"
-        }
-    }
+    Component.onCompleted: ItemHandler.restoreData();
 }
