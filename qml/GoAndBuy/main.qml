@@ -69,25 +69,30 @@ Rectangle {
                             id: addBuyItemButton
                             text: qsTr("Add")
                             Layout.fillWidth: true
-                            height: mainWindow.height / 10
+                            height: mainWindow.height / 8
                             onClicked: {
                                 if(newBuyItemText.text !== "") {
-                                    ItemHandler.addBuyItem(newBuyItemText.text)
+                                    ItemHandler.addBuyItem(newBuyItemText.text, buyItemCount.value)
                                     newBuyItemText.text = ""
                                 }
                             }
                         }
 
-                        Button {
-                            id: saveItemsButton
-                            visible: false
-                            text: qsTr("Save Items")
-                            Layout.fillWidth: true
-                            height: mainWindow.height / 10
-                            onClicked: {
-                                visible = false;
-                                ItemHandler.saveData();
-                            }
+                        SpinBox {
+                            id: buyItemCount
+                            minimumValue: 1
+                        }
+                    }
+
+                    Button {
+                        id: saveItemsButton
+                        visible: false
+                        text: qsTr("Save Items")
+                        Layout.fillWidth: true
+                        height: mainWindow.height / 8
+                        onClicked: {
+                            visible = false;
+                            ItemHandler.saveData();
                         }
                     }
                 }

@@ -6,10 +6,12 @@ SortHelper::SortHelper(QObject *parent) :
 {
 }
 
-void SortHelper::addBuyItem(QString itemName)
+void SortHelper::addBuyItem(QString itemName, quint32 itemCount)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
-    mItems << BuyItem(itemName);
+    BuyItem item(itemName);
+    item.setAmount(itemCount);
+    mItems << item;
     endInsertRows();
 }
 

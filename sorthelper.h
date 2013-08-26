@@ -34,7 +34,7 @@ public:
     };
 
     explicit SortHelper(QObject *parent = 0);
-    Q_INVOKABLE void addBuyItem(QString itemName);
+    Q_INVOKABLE void addBuyItem(QString itemName, quint32 itemCount = 1);
     Q_INVOKABLE void removeItem(int position);
     Q_INVOKABLE void moveToEnd(int position);
     Q_INVOKABLE void moveToStart(int position);

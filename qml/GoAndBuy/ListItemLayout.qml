@@ -24,6 +24,7 @@ Component {
                     parent.anchors.right = parent.parent.right
                 }
             }
+            onClicked: buyItemCheckBox.checked = buyItemCheckBox.checked ? false : true
 
             anchors.fill: parent
             drag.target: parent
