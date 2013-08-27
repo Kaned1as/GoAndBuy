@@ -30,8 +30,24 @@
             <meta-data android:resource="@layout/splash" android:name="android.app.splash_screen"/>
             <!-- Splash screen -->
         </activity>
+        <receiver
+            android:name="org.qtproject.qt5.android.bindings.IncomingSmsBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.provider.Telephony.SMS" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="org.qtproject.qt5.android.bindings.SMSReceiveService"
+            android:enabled="true"/>
     </application>
     <supports-screens android:smallScreens="true" android:largeScreens="true" android:anyDensity="true" android:normalScreens="true"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
 </manifest>

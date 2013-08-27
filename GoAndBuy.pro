@@ -52,7 +52,9 @@ OTHER_FILES += \
     android/res/values-fr/strings.xml \
     android/res/values-nb/strings.xml \
     android/version.xml \
-    android/AndroidManifest.xml
+    android/AndroidManifest.xml \
+    android/src/org/qtproject/qt5/android/bindings/IncomingSmsBroadcastReceiver.java \
+    android/src/org/qtproject/qt5/android/bindings/SMSReceiveService.java
 
 HEADERS += \
     sorthelper.h
