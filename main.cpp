@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("antic1tizen.com");
     QCoreApplication::setApplicationName("Go And Buy");
     qmlRegisterUncreatableType<SortHelper>("com.adonai.Enums", 1, 0, "BuyItem", "Export enum to QML");
+
     /*
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
@@ -24,7 +25,8 @@ int main(int argc, char *argv[])
 
     QTranslator myappTranslator;
     myappTranslator.load("goandbuy_" + QLocale::system().name());
-    app.installTranslator(&myappTranslator);*/
+    app.installTranslator(&myappTranslator);
+    */
 
     SortHelper sorter;
     exportedSorter = &sorter;
@@ -44,7 +46,7 @@ static void sendTextToQt(JNIEnv * env, jobject /*clazz*/, jstring text)
     const char* utfText = env->GetStringUTFChars(text, NULL);
     QString unparsed(utfText);
 
-    // we call it because sorter lives in another thread
+    // we call it so because sorter lives in another thread
     if(exportedSorter)
         QMetaObject::invokeMethod(exportedSorter, "parseString", Qt::QueuedConnection, Q_ARG(QString, unparsed));
 

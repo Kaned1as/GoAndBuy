@@ -1,5 +1,6 @@
 #include "sorthelper.h"
 #include <QDebug>
+#include <QStringList>
 
 SortHelper::SortHelper(QObject *parent) :
     QAbstractListModel(parent)
@@ -10,7 +11,7 @@ void SortHelper::addBuyItem(QString itemName, quint32 itemCount)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     BuyItem item(itemName);
-    item.setAmount(itemCount);
+    item.setAmount(itemCount > 0 ? itemCount : 1);
     mItems << item;
     endInsertRows();
 }
@@ -143,7 +144,32 @@ QHash<int, QByteArray> SortHelper::roleNames() const
 
 void SortHelper::parseString(QString deliveredText)
 {
-    addBuyItem(deliveredText);
+    int buyStart = deliveredText.indexOf(tr("buy"), 0, Qt::CaseInsensitive);
+    if(buyStart == -1)
+        return;
+
+    // we must parse all buy items, let's assume they are divided by commas and contain amounts
+    int buyEnd = deliveredText.indexOf('.', buyStart);
+    QStringList buyItemsList = deliveredText.mid(buyStart + tr("buy").length(), buyEnd).split(",", QString::SkipEmptyParts);
+    if(buyItemsList.count() > 0)
+        for(QString item : buyItemsList)
+        {
+            QStringList itemParsed = item.split(' ', QString::SkipEmptyParts);
+            quint32 assumedCount = 0;
+            // search for amount, store and delete it from item text
+            QMutableListIterator<QString> it(itemParsed);
+            while(it.hasNext())
+            {
+                assumedCount = it.next().toUInt();
+                if(assumedCount)
+                {
+                    it.remove();
+                    break;
+                }
+            }
+
+            addBuyItem(itemParsed.join(' '), assumedCount);
+        }
 }
 
 
