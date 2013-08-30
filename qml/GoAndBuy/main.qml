@@ -51,16 +51,7 @@ Rectangle {
                         id: newBuyItemText
                         placeholderText: qsTr("New item name")
                         Layout.fillWidth: true
-                        style: TextFieldStyle {
-                            textColor: "black"
-                            background: Rectangle {
-                                radius: mainWindow.width / 100
-                                implicitHeight: mainWindow.height / 16
-                                border.color: "#333"
-                                border.width: 1
-                            }
-                        }
-
+                        Layout.minimumHeight: mainWindow.height / 16
                         onAccepted: addBuyItemButton.clicked()
                     }
                     RowLayout
@@ -69,7 +60,7 @@ Rectangle {
                             id: addBuyItemButton
                             text: qsTr("Add")
                             Layout.fillWidth: true
-                            implicitHeight: mainWindow.height / 16
+                            Layout.minimumHeight: mainWindow.height / 16
                             onClicked: {
                                 if(newBuyItemText.text !== "") {
                                     ItemHandler.addBuyItem(newBuyItemText.text, buyItemCount.value)
@@ -81,7 +72,7 @@ Rectangle {
                         SpinBox {
                             id: buyItemCount
                             minimumValue: 1
-                            implicitHeight: mainWindow.height / 16
+                            Layout.minimumHeight: mainWindow.height / 16
                         }
                     }
 
@@ -90,7 +81,7 @@ Rectangle {
                         visible: false
                         text: qsTr("Save Items")
                         Layout.fillWidth: true
-                        implicitHeight: mainWindow.height / 16
+                        Layout.minimumHeight: mainWindow.height / 16
                         onClicked: {
                             visible = false;
                             ItemHandler.saveData();
@@ -101,11 +92,51 @@ Rectangle {
         }
 
         Tab {
-            title: "Second"
+            title: "Parameters"
 
             GroupBox {
                 anchors.fill: parent
                 anchors.margins: 5
+
+                Column {
+                    id: prefContainer
+                    anchors.fill: parent
+                    spacing: 5
+
+                    add: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutBounce; from: mainWindow.height; duration: 400 } }
+                    move: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
+
+
+                    TextField {
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        height: mainWindow.height / 16
+                        placeholderText: qsTr("Phone number to track")
+                    }
+
+                }
+
+                Button {
+                    id: addPhoneButton
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                    height: mainWindow.height / 16
+                    text: qsTr("Add another phone")
+                    onClicked: {
+                        if(prefContainer.children.length >= 5)
+                            return;
+
+                        Qt.createQmlObject('import QtQuick.Layouts 1.0;
+                                                   import QtQuick.Controls 1.0;
+                                                   TextField {
+                                                        anchors.left: parent.left
+                                                        anchors.right: parent.right
+                                                        height: mainWindow.height / 16
+                                                   }', prefContainer);
+                        }
+                }
+
             }
         }
     }

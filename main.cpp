@@ -5,7 +5,9 @@
 #include "qtquick2applicationviewer.h"
 #include "sorthelper.h"
 
+#ifdef ANDROID
 #include <jni.h>
+#endif
 
 static SortHelper* exportedSorter;
 
@@ -40,6 +42,7 @@ int main(int argc, char *argv[])
     return app.exec();
 }
 
+#ifdef ANDROID
 // our native method, it is called by the java code above
 static void sendTextToQt(JNIEnv * env, jobject /*clazz*/, jstring text)
 {
@@ -87,3 +90,4 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* /*reserved*/)
     qDebug() << "Yahooo!";
     return JNI_VERSION_1_6;
 }
+#endif

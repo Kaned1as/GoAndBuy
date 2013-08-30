@@ -157,7 +157,7 @@ void SortHelper::parseString(QString deliveredText)
             QStringList itemParsed = item.split(' ', QString::SkipEmptyParts);
             quint32 assumedCount = 0;
             // search for amount, store and delete it from item text
-            QMutableListIterator<QString> it(itemParsed);
+            QMutableStringListIterator it(itemParsed);
             while(it.hasNext())
             {
                 assumedCount = it.next().toUInt();
