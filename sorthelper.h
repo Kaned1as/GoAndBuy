@@ -3,6 +3,7 @@
 
 #include <QAbstractListModel>
 #include <QSettings>
+#include <QEvent>
 
 class BuyItem
 {
@@ -54,7 +55,7 @@ private:
 signals:
     
 public slots:
-    
+    void parseString(QString deliveredText);
 };
 
 #endif // SORTHELPER_H

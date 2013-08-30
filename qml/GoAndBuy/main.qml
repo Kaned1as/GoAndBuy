@@ -69,7 +69,7 @@ Rectangle {
                             id: addBuyItemButton
                             text: qsTr("Add")
                             Layout.fillWidth: true
-                            height: mainWindow.height / 8
+                            implicitHeight: mainWindow.height / 16
                             onClicked: {
                                 if(newBuyItemText.text !== "") {
                                     ItemHandler.addBuyItem(newBuyItemText.text, buyItemCount.value)
@@ -81,6 +81,7 @@ Rectangle {
                         SpinBox {
                             id: buyItemCount
                             minimumValue: 1
+                            implicitHeight: mainWindow.height / 16
                         }
                     }
 
@@ -89,7 +90,7 @@ Rectangle {
                         visible: false
                         text: qsTr("Save Items")
                         Layout.fillWidth: true
-                        height: mainWindow.height / 8
+                        implicitHeight: mainWindow.height / 16
                         onClicked: {
                             visible = false;
                             ItemHandler.saveData();

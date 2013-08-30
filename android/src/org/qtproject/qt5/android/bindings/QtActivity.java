@@ -903,6 +903,9 @@ public class QtActivity extends Activity
     {
         if (!QtApplication.invokeDelegate(intent).invoked)
             super.onNewIntent(intent);
+
+        if(intent.hasExtra("text"))
+            setIntent(intent);
     }
     public void super_onNewIntent(Intent intent)
     {
@@ -1040,6 +1043,12 @@ public class QtActivity extends Activity
     {
         super.onResume();
         QtApplication.invokeDelegate();
+
+        if(getIntent().hasExtra("text"))
+        {
+            sendTextToQt(getIntent().getStringExtra("text"));
+            getIntent().removeExtra("text");
+        }
     }
     //---------------------------------------------------------------------------
 
@@ -1401,4 +1410,5 @@ public class QtActivity extends Activity
     //---------------------------------------------------------------------------
 //@ANDROID-12
 
+    static private native void sendTextToQt(String text);
 }

@@ -88,6 +88,7 @@ void SortHelper::restoreData()
 
 int SortHelper::rowCount(const QModelIndex &parent) const
 {
+    Q_UNUSED(parent)
     return mItems.count();
 }
 
@@ -138,6 +139,11 @@ QHash<int, QByteArray> SortHelper::roleNames() const
     roles[DoneRole] = "done";
     roles[AmountRole] = "amount";
     return roles;
+}
+
+void SortHelper::parseString(QString deliveredText)
+{
+    addBuyItem(deliveredText);
 }
 
 
