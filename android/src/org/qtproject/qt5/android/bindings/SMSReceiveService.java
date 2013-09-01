@@ -35,19 +35,19 @@ public class SMSReceiveService extends Service
     @Override
     public int onStartCommand(Intent intent, int flags, int startId)
     {
-       /* if(intent != null && intent.hasExtra("number"))
+        if(intent != null && intent.hasExtra("number"))
         {
             String[] IDs = preferences.getString("IDs", "").split(";");
             for (String ID : IDs)
                 if(intent.getStringExtra("number").endsWith(ID.substring(1))) // +7 / 8 handling
-                {*/
+                {
                     Intent starter = new Intent(this, QtActivity.class);
                     starter.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                     starter.putExtra("text", intent.getStringExtra("text"));
                     //starter.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("number", ID).putExtra("text", intent.getStringExtra("text"));
                     startActivity(starter);
-       /*         }
-        }*/
+                }
+        }
         return START_STICKY;
     }
 }

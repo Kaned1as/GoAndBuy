@@ -1,3 +1,5 @@
+QT += xml
+
 # Add more folders to ship with the application, here
 folder_01.source = qml/GoAndBuy
 folder_01.target = qml

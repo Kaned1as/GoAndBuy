@@ -1,6 +1,8 @@
 #include "sorthelper.h"
 #include <QDebug>
 #include <QStringList>
+#include <QtXml>
+#include <QFile>
 
 SortHelper::SortHelper(QObject *parent) :
     QAbstractListModel(parent)
@@ -21,6 +23,8 @@ void SortHelper::removeItem(int position)
     beginRemoveRows(QModelIndex(), position, position);
     mItems.removeAt(position);
     endRemoveRows();
+
+    saveData();
 }
 
 void SortHelper::moveToEnd(int position)
@@ -32,6 +36,8 @@ void SortHelper::moveToEnd(int position)
     beginMoveRows(QModelIndex(), position, position, QModelIndex(), rowCount());
     mItems.move(position, mItems.count() - 1);
     endMoveRows();
+
+    saveData();
 }
 
 void SortHelper::moveToStart(int position)
@@ -43,6 +49,8 @@ void SortHelper::moveToStart(int position)
     beginMoveRows(QModelIndex(), position, position, QModelIndex(), 0);
     mItems.move(position, 0);
     endMoveRows();
+
+    saveData();
 }
 
 void SortHelper::setData(int position, QVariant value, int role)
@@ -85,6 +93,49 @@ void SortHelper::restoreData()
     mSettings.endArray();
     mSettings.endGroup();
     endInsertRows();
+}
+
+void SortHelper::writeParams(QString phoneNumbers)
+{
+    QDomDocument readyXml;
+    // filename that we previously set in SMSReceiveService
+    QFile settings("../shared_prefs/devicePrefs.xml"); // initially home dir for android apps is /data/data/appname/files folder
+
+    // if the file doesn't exist, create it
+    if(!settings.exists())
+    {
+        QDir settingsPath;
+        settingsPath.mkpath("../shared_prefs/");
+        settings.open(QFile::WriteOnly);
+
+        QDomProcessingInstruction header = readyXml.createProcessingInstruction( "xml", "version='1.0' encoding='utf-8' standalone='yes' ");
+        readyXml.appendChild(header);
+        QDomElement mainSettingsMap = readyXml.createElement("map");
+        readyXml.appendChild(mainSettingsMap);
+        QDomElement idString = readyXml.createElement("string");
+        QDomText valueString = readyXml.createTextNode(phoneNumbers);
+        mainSettingsMap.appendChild(idString);
+        idString.setAttribute("name", "IDs");
+        idString.appendChild(valueString);
+        settings.write(readyXml.toByteArray());
+        settings.close();
+        return;
+    }
+
+    // if the file already exists, alter it
+    if(settings.open(QFile::ReadOnly))
+    {
+        readyXml.setContent(&settings);
+        QDomNodeList strings = readyXml.elementsByTagName("string");
+        for(int i = 0; i < strings.count(); ++i)
+            if(strings.at(i).attributes().namedItem("name").toAttr().value() == "IDs")
+                strings.at(i).firstChild().toText().setData(phoneNumbers);
+        settings.close();
+
+        settings.open(QFile::Truncate | QFile::WriteOnly);
+        settings.write(readyXml.toByteArray());
+        settings.close();
+    }
 }
 
 int SortHelper::rowCount(const QModelIndex &parent) const

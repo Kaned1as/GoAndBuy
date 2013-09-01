@@ -43,6 +43,9 @@ public:
     Q_INVOKABLE void saveData();
     Q_INVOKABLE void restoreData();
 
+    // this function is never called in desktop versions!
+    Q_INVOKABLE void writeParams(QString phoneNumbers);
+
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
@@ -55,6 +58,7 @@ private:
 signals:
     
 public slots:
+    // this function is never called in desktop versions!
     void parseString(QString deliveredText);
 };
 

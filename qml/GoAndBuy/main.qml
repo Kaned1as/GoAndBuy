@@ -75,18 +75,6 @@ Rectangle {
                             Layout.minimumHeight: mainWindow.height / 16
                         }
                     }
-
-                    Button {
-                        id: saveItemsButton
-                        visible: false
-                        text: qsTr("Save Items")
-                        Layout.fillWidth: true
-                        Layout.minimumHeight: mainWindow.height / 16
-                        onClicked: {
-                            visible = false;
-                            ItemHandler.saveData();
-                        }
-                    }
                 }
             }
         }
@@ -112,12 +100,16 @@ Rectangle {
                         anchors.right: parent.right
                         height: mainWindow.height / 16
                         placeholderText: qsTr("Phone number to track")
+                        onActiveFocusChanged: if(!activeFocus) {
+                            ItemHandler.writeParams(text);
+                        }
                     }
 
                 }
 
                 Button {
                     id: addPhoneButton
+                    activeFocusOnPress: true
                     anchors.left: parent.left
                     anchors.right: parent.right
                     anchors.bottom: parent.bottom
