@@ -15,7 +15,8 @@ QML_IMPORT_PATH =
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    sorthelper.cpp
+    sorthelper.cpp \
+    androidpreferences.cpp
 
 CONFIG += C++11
 
@@ -59,4 +60,5 @@ OTHER_FILES += \
     android/src/org/qtproject/qt5/android/bindings/SMSReceiveService.java
 
 HEADERS += \
-    sorthelper.h
+    sorthelper.h \
+    androidpreferences.h

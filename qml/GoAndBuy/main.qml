@@ -43,8 +43,6 @@ Rectangle {
                         remove: Transition { NumberAnimation { property: "x"; to: Math.abs(x) / x * mainWindow.width; duration: 500 } }
                         removeDisplaced: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
                         moveDisplaced:  Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
-
-                        onCountChanged: saveItemsButton.visible = true;
                     }
 
                     TextField {
@@ -103,6 +101,7 @@ Rectangle {
                         onActiveFocusChanged: if(!activeFocus) {
                             ItemHandler.writeParams(text);
                         }
+                        onTextChanged: ItemHandler.saveParams(text);
                     }
 
                 }

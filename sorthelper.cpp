@@ -93,6 +93,23 @@ void SortHelper::restoreData()
     mSettings.endArray();
     mSettings.endGroup();
     endInsertRows();
+
+    QFile settings("../shared_prefs/devicePrefs.xml"); // initially home dir for android apps is /data/data/appname/files folder
+    if(settings.exists() && settings.open(QFile::ReadOnly))
+    {
+        readyXml.setContent(&settings);
+        QDomNodeList strings = readyXml.elementsByTagName("string");
+        for(int i = 0; i < strings.count(); ++i)
+        {
+            if(strings.at(i).attributes().namedItem("name").toAttr().value() == "IDs")
+                phoneSettings.setPhoneNumbers(strings.at(i).toElement().text());
+        }
+        settings.close();
+
+        settings.open(QFile::Truncate | QFile::WriteOnly);
+        settings.write(readyXml.toByteArray());
+        settings.close();
+    }
 }
 
 void SortHelper::writeParams(QString phoneNumbers)
@@ -108,15 +125,19 @@ void SortHelper::writeParams(QString phoneNumbers)
         settingsPath.mkpath("../shared_prefs/");
         settings.open(QFile::WriteOnly);
 
+        // write xml header usual for android shared prefs
         QDomProcessingInstruction header = readyXml.createProcessingInstruction( "xml", "version='1.0' encoding='utf-8' standalone='yes' ");
         readyXml.appendChild(header);
+        // write main prefs map
         QDomElement mainSettingsMap = readyXml.createElement("map");
         readyXml.appendChild(mainSettingsMap);
+        // ID string - list of phones separated by ;
         QDomElement idString = readyXml.createElement("string");
         QDomText valueString = readyXml.createTextNode(phoneNumbers);
         mainSettingsMap.appendChild(idString);
         idString.setAttribute("name", "IDs");
         idString.appendChild(valueString);
+        // write xml prefs to file
         settings.write(readyXml.toByteArray());
         settings.close();
         return;
@@ -136,6 +157,11 @@ void SortHelper::writeParams(QString phoneNumbers)
         settings.write(readyXml.toByteArray());
         settings.close();
     }
+}
+
+void SortHelper::saveParams(QString phoneNumbers)
+{
+    phoneSettings.setPhoneNumbers(phoneNumbers);
 }
 
 int SortHelper::rowCount(const QModelIndex &parent) const

@@ -5,6 +5,8 @@
 #include <QSettings>
 #include <QEvent>
 
+#include "androidpreferences.h"
+
 class BuyItem
 {
 public:
@@ -45,6 +47,7 @@ public:
 
     // this function is never called in desktop versions!
     Q_INVOKABLE void writeParams(QString phoneNumbers);
+    Q_INVOKABLE void saveParams(QString phoneNumbers);
 
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
@@ -55,6 +58,7 @@ protected:
 private:
     QList<BuyItem> mItems;
     QSettings mSettings;
+    AndroidPreferences phoneSettings;
 signals:
     
 public slots:
