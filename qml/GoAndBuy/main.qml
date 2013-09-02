@@ -91,17 +91,30 @@ Rectangle {
 
                     add: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutBounce; from: mainWindow.height; duration: 400 } }
                     move: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
-
+                    Text {
+                        text: qsTr("Phone number to track")
+                        horizontalAlignment: Qt.AlignHCenter
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                    }
 
                     TextField {
+                        id: phonesPreference
                         anchors.left: parent.left
                         anchors.right: parent.right
                         height: mainWindow.height / 16
+                        text: AndroidPrefs.phones
+                        validator: RegExpValidator { regExp: /[\d;]+/ }
                         placeholderText: qsTr("Phone number to track")
                         onActiveFocusChanged: if(!activeFocus) {
-                            ItemHandler.writeParams(text);
+                            AndroidPrefs.writeParams(text);
                         }
-                        onTextChanged: ItemHandler.saveParams(text);
+
+                        Binding {
+                           target: AndroidPrefs
+                           property: "phones"
+                           value: phonesPreference.text
+                        }
                     }
 
                 }
@@ -132,5 +145,5 @@ Rectangle {
         }
     }
 
-    Component.onCompleted: ItemHandler.restoreData();
+    Component.onCompleted: { ItemHandler.restoreData(); AndroidPrefs.restoreParams(); }
 }

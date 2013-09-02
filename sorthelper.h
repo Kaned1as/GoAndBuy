@@ -45,11 +45,6 @@ public:
     Q_INVOKABLE void saveData();
     Q_INVOKABLE void restoreData();
 
-    // this function is never called in desktop versions!
-    Q_INVOKABLE void writeParams(QString phoneNumbers);
-    Q_INVOKABLE void saveParams(QString phoneNumbers);
-
-
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
 protected:
@@ -58,7 +53,6 @@ protected:
 private:
     QList<BuyItem> mItems;
     QSettings mSettings;
-    AndroidPreferences phoneSettings;
 signals:
     
 public slots:

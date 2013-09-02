@@ -3,7 +3,9 @@
 #include <QtQml>
 #include <QLibraryInfo>
 #include "qtquick2applicationviewer.h"
+
 #include "sorthelper.h"
+#include "androidpreferences.h"
 
 #ifdef ANDROID
 #include <jni.h>
@@ -34,8 +36,11 @@ int main(int argc, char *argv[])
     exportedSorter = &sorter;
     sorter.addBuyItem("axax");
 
+    AndroidPreferences sharedPrefs;
+
     QtQuick2ApplicationViewer viewer;
     viewer.rootContext()->setContextProperty("ItemHandler", &sorter);
+    viewer.rootContext()->setContextProperty("AndroidPrefs", &sharedPrefs);
     viewer.setMainQmlFile(QStringLiteral("qml/GoAndBuy/main.qml"));
     viewer.showExpanded();
 
