@@ -78,6 +78,7 @@ Rectangle {
         }
 
         Tab {
+            //visible: Qt
             title: "Parameters"
 
             GroupBox {
@@ -107,7 +108,7 @@ Rectangle {
                         validator: RegExpValidator { regExp: /[\d;]+/ }
                         placeholderText: qsTr("Phone number to track")
                         onActiveFocusChanged: if(!activeFocus) {
-                            AndroidPrefs.writeParams(text);
+                            AndroidPrefs.writeParams();
                         }
 
                         Binding {

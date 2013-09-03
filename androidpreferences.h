@@ -3,6 +3,7 @@
 
 #include <QStringList>
 #include <QObject>
+#include <QtXml>
 
 class AndroidPreferences : public QObject
 {
@@ -12,15 +13,17 @@ public:
 
     Q_PROPERTY(QString phones READ phones WRITE setPhones NOTIFY phonesChanged)
 
-    void setPhones(QString phones);
-
-    // this function is never called in desktop versions!
-    Q_INVOKABLE void writeParams(QString phoneNumbers);
-    Q_INVOKABLE void saveParams(QString phoneNumbers);
+    // this functions are never called in desktop versions!
+    Q_INVOKABLE void writeParams();
+    Q_INVOKABLE void saveValue(QString name, QString value);
+    Q_INVOKABLE QString getValue(QString name);
     Q_INVOKABLE void restoreParams();
+
     QString phones();
+    void setPhones(QString newPhones);
 private:
-    QStringList phoneNumbers;
+    QDomDocument prefXML;
+    QDomElement prefMap;
 signals:
     void phonesChanged(QString);
 };

@@ -14,6 +14,8 @@ void SortHelper::addBuyItem(QString itemName, quint32 itemCount)
     item.setAmount(itemCount > 0 ? itemCount : 1);
     mItems << item;
     endInsertRows();
+
+    saveData();
 }
 
 void SortHelper::removeItem(int position)
@@ -27,7 +29,6 @@ void SortHelper::removeItem(int position)
 
 void SortHelper::moveToEnd(int position)
 {
-    qDebug() << mItems.at(position).done();
     if(position == rowCount() - 1)
         return;
 
