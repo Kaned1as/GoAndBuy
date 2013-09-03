@@ -11,12 +11,12 @@ class AndroidPreferences : public QObject
 public:
     AndroidPreferences(QObject *parent = 0);
 
-    Q_PROPERTY(QString phones READ phones WRITE setPhones NOTIFY phonesChanged)
+    Q_PROPERTY(QString phones READ phones WRITE setPhones NOTIFY phonesChanged STORED false)
 
     // this functions are never called in desktop versions!
-    Q_INVOKABLE void writeParams();
+    Q_INVOKABLE void writeParams() const;
     Q_INVOKABLE void saveValue(QString name, QString value);
-    Q_INVOKABLE QString getValue(QString name);
+    Q_INVOKABLE const QString getValue(QString name) const;
     Q_INVOKABLE void restoreParams();
 
     QString phones();

@@ -13,7 +13,7 @@ AndroidPreferences::AndroidPreferences(QObject *parent) : QObject(parent)
 
 
 
-void AndroidPreferences::writeParams()
+void AndroidPreferences::writeParams() const
 {
     // filename that we previously set in SMSReceiveService
     QFile settings("../shared_prefs/devicePrefs.xml"); // initially home dir for android apps is /data/data/appname/files folder
@@ -79,7 +79,7 @@ void AndroidPreferences::saveValue(QString name, QString value)
     idString.appendChild(valueString);
 }
 
-QString AndroidPreferences::getValue(QString name)
+const QString AndroidPreferences::getValue(QString name) const
 {
     for(int i = 0; i < prefMap.childNodes().count(); ++i)
     {
