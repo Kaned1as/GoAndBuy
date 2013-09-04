@@ -17,18 +17,18 @@ Component {
                 parent.anchors.right = undefined
             }
             onReleased: {
-                if(parent.opacity < 0.5)
+                if(parent.opacity < 0.7)
                     ItemHandler.removeItem(index)
                 else {
                     parent.anchors.left = parent.parent.left
                     parent.anchors.right = parent.parent.right
                 }
             }
-            onClicked: buyItemCheckBox.checked = buyItemCheckBox.checked ? false : true
+            onClicked: buyItemCheckBox.checked = !buyItemCheckBox.checked
 
             anchors.fill: parent
             drag.target: parent
-            drag.axis: Drag.XAxis
+            //drag.axis: Drag.XAxis
         }
 
         Rectangle {
@@ -49,16 +49,16 @@ Component {
                     Layout.alignment: Qt.AlignVCenter
                     style: CheckBoxStyle {
                         indicator: Rectangle {
-                            implicitWidth: mainWindow.width / 15
-                            implicitHeight: mainWindow.width / 15
-                            radius: mainWindow.width / 100
+                            implicitWidth: mainWindow.height / 30
+                            implicitHeight: mainWindow.height / 30
+                            radius: mainWindow.height / 200
                             border.color: control.activeFocus ? "darkblue" : "gray"
                             border.width: 1
                             Rectangle {
                                 visible: control.checked
                                 color: "#555"
                                 border.color: "#333"
-                                radius: 2
+                                radius: mainWindow.height / 400
                                 anchors.margins: 4
                                 anchors.fill: parent
                             }
@@ -76,10 +76,13 @@ Component {
 
                 Text {
                     id: buyItemName
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.fillWidth: true
-                    text: name
+                    anchors.left: buyItemCheckBox.right
+                    anchors.right: splitter.left
                     horizontalAlignment: Qt.AlignHCenter
+                    text: name
+                    color: "white"
+                    font.bold: true
+                    wrapMode: Text.Wrap
                 }
 
                 Rectangle {

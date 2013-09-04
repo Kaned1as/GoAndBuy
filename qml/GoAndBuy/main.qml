@@ -118,6 +118,31 @@ Rectangle {
                         }
                     }
 
+                    Text {
+                        text: qsTr("Buy string to search for")
+                        horizontalAlignment: Qt.AlignHCenter
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                    }
+
+                    TextField {
+                        id: buyStringPreference
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        height: mainWindow.height / 16
+                        text: AndroidPrefs.buyString
+                        placeholderText: qsTr("Buy string")
+                        onActiveFocusChanged: if(!activeFocus) {
+                            AndroidPrefs.writeParams();
+                        }
+
+                        Binding {
+                           target: AndroidPrefs
+                           property: "buyString"
+                           value: buyStringPreference.text
+                        }
+                    }
+
                 }
 
                 Button {
@@ -139,12 +164,9 @@ Rectangle {
                                                         anchors.right: parent.right
                                                         height: mainWindow.height / 16
                                                    }', prefContainer);
-                        }
+                    }
                 }
-
             }
         }
     }
-
-    Component.onCompleted: { ItemHandler.restoreData(); AndroidPrefs.restoreParams(); }
 }

@@ -3,7 +3,9 @@ QT += xml
 # Add more folders to ship with the application, here
 folder_01.source = qml/GoAndBuy
 folder_01.target = qml
-DEPLOYMENTFOLDERS = folder_01
+folder_02.source = i18n
+folder_02.target = .
+DEPLOYMENTFOLDERS = folder_01 folder_02
 
 # Additional import path used to resolve QML modules in Creator's code model
 QML_IMPORT_PATH =
@@ -17,6 +19,8 @@ QML_IMPORT_PATH =
 SOURCES += main.cpp \
     sorthelper.cpp \
     androidpreferences.cpp
+
+TRANSLATIONS = i18n/ru_RU.ts
 
 CONFIG += C++11
 

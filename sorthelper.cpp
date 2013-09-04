@@ -2,8 +2,8 @@
 #include <QDebug>
 #include <QStringList>
 
-SortHelper::SortHelper(QObject *parent) :
-    QAbstractListModel(parent)
+SortHelper::SortHelper(AndroidPreferences* prefs, QObject *parent) :
+    QAbstractListModel(parent), mPrefs(prefs)
 {
 }
 
@@ -41,7 +41,6 @@ void SortHelper::moveToEnd(int position)
 
 void SortHelper::moveToStart(int position)
 {
-    qDebug() << mItems.at(position).done();
     if(position == 0)
         return;
 
@@ -151,13 +150,19 @@ QHash<int, QByteArray> SortHelper::roleNames() const
 
 void SortHelper::parseString(QString deliveredText)
 {
-    int buyStart = deliveredText.indexOf(tr("buy"), 0, Qt::CaseInsensitive);
+    QString buyString = mPrefs ? mPrefs->buyString() : tr("buy");
+
+    int buyStart = deliveredText.indexOf(buyString, 0, Qt::CaseInsensitive);
     if(buyStart == -1)
         return;
+    buyStart += buyString.length(); // real start point
+
+    int buyEnd = deliveredText.indexOf('.', buyStart);
+    if(buyEnd == - 1)
+        buyEnd == deliveredText.length(); // real end point
 
     // we must parse all buy items, let's assume they are divided by commas and contain amounts
-    int buyEnd = deliveredText.indexOf('.', buyStart);
-    QStringList buyItemsList = deliveredText.mid(buyStart + tr("buy").length(), buyEnd).split(",", QString::SkipEmptyParts);
+    QStringList buyItemsList = deliveredText.mid(buyStart, buyEnd - buyStart).split(",", QString::SkipEmptyParts);
     if(buyItemsList.count() > 0)
         for(QString item : buyItemsList)
         {

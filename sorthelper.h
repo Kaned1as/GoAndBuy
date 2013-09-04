@@ -36,14 +36,14 @@ public:
         AmountRole
     };
 
-    explicit SortHelper(QObject *parent = 0);
+    explicit SortHelper(AndroidPreferences* prefs = NULL, QObject *parent = 0);
     Q_INVOKABLE void addBuyItem(QString itemName, quint32 itemCount = 1);
     Q_INVOKABLE void removeItem(int position);
     Q_INVOKABLE void moveToEnd(int position);
     Q_INVOKABLE void moveToStart(int position);
     Q_INVOKABLE void setData(int position, QVariant value, int role = NameRole);
     Q_INVOKABLE void saveData();
-    Q_INVOKABLE void restoreData();
+    void restoreData();
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
@@ -53,6 +53,7 @@ protected:
 private:
     QList<BuyItem> mItems;
     QSettings mSettings;
+    AndroidPreferences* mPrefs;
 signals:
     
 public slots:
