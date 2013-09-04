@@ -30,8 +30,7 @@ int main(int argc, char *argv[])
 
 
     QTranslator myappTranslator;
-    myappTranslator.load("i18n/" + localeString);
-    qDebug() << localeString;
+    myappTranslator.load("assets:/i18n/" + localeString);
     app.installTranslator(&myappTranslator);
 
 
