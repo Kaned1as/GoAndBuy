@@ -1,8 +1,8 @@
 QT += xml
 
 # Add more folders to ship with the application, here
-folder_01.source = qml/GoAndBuy
-folder_01.target = qml
+folder_01.source = qml
+folder_01.target = .
 folder_02.source = i18n
 folder_02.target = .
 DEPLOYMENTFOLDERS = folder_01 folder_02

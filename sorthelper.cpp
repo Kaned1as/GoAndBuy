@@ -157,9 +157,9 @@ void SortHelper::parseString(QString deliveredText)
         return;
     buyStart += buyString.length(); // real start point
 
-    int buyEnd = deliveredText.indexOf('.', buyStart);
+    int buyEnd = deliveredText.indexOf(QRegExp("[.!\?]"), buyStart);
     if(buyEnd == - 1)
-        buyEnd == deliveredText.length(); // real end point
+        buyEnd = deliveredText.length(); // real end point
 
     // we must parse all buy items, let's assume they are divided by commas and contain amounts
     QStringList buyItemsList = deliveredText.mid(buyStart, buyEnd - buyStart).split(",", QString::SkipEmptyParts);

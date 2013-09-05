@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     QtQuick2ApplicationViewer viewer;
     viewer.rootContext()->setContextProperty("ItemHandler", &sorter);
     viewer.rootContext()->setContextProperty("AndroidPrefs", &sharedPrefs);
-    viewer.setMainQmlFile(QStringLiteral("qml/GoAndBuy/main.qml"));
+    viewer.setMainQmlFile(QStringLiteral("qml/main.qml"));
     viewer.showExpanded();
 
     return app.exec();
