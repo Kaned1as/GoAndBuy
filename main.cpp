@@ -14,9 +14,9 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    QCoreApplication::setOrganizationName("Heaven Inc.");
-    QCoreApplication::setOrganizationDomain("antic1tizen.com");
-    QCoreApplication::setApplicationName("Go And Buy");
+    app.setOrganizationName("Heaven Inc.");
+    app.setOrganizationDomain("antic1tizen.com");
+    app.setApplicationName("Go And Buy");
     qmlRegisterUncreatableType<SortHelper>("com.adonai.Enums", 1, 0, "BuyItem", "Export enum to QML");
 
 
@@ -24,13 +24,15 @@ int main(int argc, char *argv[])
     qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     app.installTranslator(&qtTranslator);
 
-#ifndef ANDROID
-    localeString = QLocale::system().name();
+#ifdef ANDROID
+    localeString = "assets:/i18n/" + localeString;
+#else
+    localeString = "i18n/" + QLocale::system().name();
 #endif
 
 
     QTranslator myappTranslator;
-    myappTranslator.load("assets:/i18n/" + localeString);
+    myappTranslator.load(localeString);
     app.installTranslator(&myappTranslator);
 
 

@@ -20,11 +20,11 @@ TabView {
                 anchors.centerIn: parent
                 text: styleData.title
                 font.bold: true
-                color: styleData.selected ? "white" : "black"
+                color: styleData.selected ? "gray" : "black"
             }
             gradient: Gradient {
-                GradientStop { position: 0.0; color: styleData.selected ? "lightgray" : "gray" }
-                GradientStop { position: 1.0; color: styleData.selected ? "gray" : "lightgray" }
+                GradientStop { position: 0.0; color: styleData.selected ? "white" : "gray" }
+                GradientStop { position: 1.0; color:  "lightgray" }
             }
         }
     }
