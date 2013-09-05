@@ -20,8 +20,8 @@ public:
     Q_INVOKABLE const QString getValue(const QString name) const;
     void restoreParams();
 
-    QString phones();
-    QString buyString();
+    QString phones() const;
+    QString buyString() const;
     void setPhones(const QString newPhones);
     void setBuyString(const QString newBuyString);
 private:

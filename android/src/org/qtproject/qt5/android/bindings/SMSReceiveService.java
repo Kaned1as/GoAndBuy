@@ -9,7 +9,6 @@ import android.os.IBinder;
 public class SMSReceiveService extends Service
 {
     final public static String PREFERENCES = "devicePrefs";
-    Activity boundListener;
     SharedPreferences preferences;
 
     @Override
@@ -21,7 +20,6 @@ public class SMSReceiveService extends Service
     @Override
     public boolean onUnbind(Intent intent)
     {
-        boundListener = null;
         return false;
     }
 
@@ -39,7 +37,7 @@ public class SMSReceiveService extends Service
         {
             String[] IDs = preferences.getString("IDs", "").split(";");
             for (String ID : IDs)
-                if(intent.getStringExtra("number").endsWith(ID.substring(1))) // +7 / 8 handling
+                if(ID.length() > 1 && intent.getStringExtra("number").endsWith(ID.substring(1))) // +7 / 8 handling
                 {
                     Intent starter = new Intent(this, QtActivity.class);
                     starter.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);

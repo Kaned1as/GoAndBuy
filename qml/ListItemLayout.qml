@@ -14,7 +14,7 @@ Component {
         opacity: (mainWidget.width - Math.abs(x)) / mainWidget.width
 
         color: "gray"
-        radius: mainWidget.width / 50
+        radius: mainWidget.height / 100
         border.width: 3
         border.color: Qt.darker("gray")
 

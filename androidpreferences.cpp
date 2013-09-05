@@ -90,12 +90,12 @@ const QString AndroidPreferences::getValue(const QString name) const
     return QString();
 }
 
-QString AndroidPreferences::phones()
+QString AndroidPreferences::phones() const
 {
     return getValue("IDs");
 }
 
-QString AndroidPreferences::buyString()
+QString AndroidPreferences::buyString() const
 {
     return getValue("buyString");
 }
