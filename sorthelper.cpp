@@ -51,11 +51,6 @@ void SortHelper::moveToStart(int position)
     saveData();
 }
 
-void SortHelper::setData(int position, QVariant value, int role)
-{
-    setData(index(position), value, role);
-}
-
 void SortHelper::saveData()
 {
     mSettings.beginGroup("Stored");
@@ -97,6 +92,12 @@ int SortHelper::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent)
     return mItems.count();
+}
+
+
+void SortHelper::setData(int position, QVariant value, int role)
+{
+    setData(index(position), value, role);
 }
 
 bool SortHelper::setData(const QModelIndex &index, const QVariant &value, int role)
