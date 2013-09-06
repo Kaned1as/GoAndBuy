@@ -5,6 +5,7 @@
 #include "qtquick2applicationviewer.h"
 
 #include "sorthelper.h"
+#include "clipboardadapter.h"
 #include "androidpreferences.h"
 
 static QString localeString = "";
@@ -43,7 +44,10 @@ int main(int argc, char *argv[])
     sorter.restoreData();
     exportedSorter = &sorter;
 
+    ClipboardAdapter adapter;
+
     QtQuick2ApplicationViewer viewer;
+    viewer.rootContext()->setContextProperty("ClipboardAdapter", &adapter);
     viewer.rootContext()->setContextProperty("ItemHandler", &sorter);
     viewer.rootContext()->setContextProperty("AndroidPrefs", &sharedPrefs);
     viewer.setMainQmlFile(QStringLiteral("qml/main.qml"));

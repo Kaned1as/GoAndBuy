@@ -1,4 +1,4 @@
-QT += xml
+QT += xml widgets
 
 # Add more folders to ship with the application, here
 folder_01.source = qml
@@ -65,4 +65,5 @@ OTHER_FILES += \
 
 HEADERS += \
     sorthelper.h \
-    androidpreferences.h
+    androidpreferences.h \
+    clipboardadapter.h
