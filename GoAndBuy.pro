@@ -1,4 +1,5 @@
 QT += xml widgets
+INCLUDEPATH += /usr/lib/llvm-3.2/lib/clang/3.2/include/
 
 # Add more folders to ship with the application, here
 folder_01.source = qml
@@ -20,7 +21,7 @@ SOURCES += main.cpp \
     sorthelper.cpp \
     androidpreferences.cpp
 
-TRANSLATIONS = i18n/ru_RU.ts
+TRANSLATIONS += i18n/ru_RU.ts
 
 CONFIG += C++11
 

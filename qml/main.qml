@@ -7,6 +7,16 @@ TabView {
     width: 300
     height: 600
 
+    Rectangle {
+        anchors.fill: parent
+        color: "red"
+        visible: AndroidPrefs.getValue("firstLaunch") !== "0"
+        Component.onCompleted: {
+            AndroidPrefs.setValue("firstLaunch", "0")
+            AndroidPrefs.writeParams()
+        }
+    }
+
     style: TabViewStyle {
         frameOverlap: 1
         tabsMovable: true

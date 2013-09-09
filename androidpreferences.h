@@ -16,7 +16,7 @@ public:
 
     // this functions are never called in desktop versions!
     Q_INVOKABLE void writeParams() const;
-    Q_INVOKABLE void saveValue(const QString name, const QString value);
+    Q_INVOKABLE void setValue(const QString name, const QString value);
     Q_INVOKABLE const QString getValue(const QString name) const;
     void restoreParams();
 

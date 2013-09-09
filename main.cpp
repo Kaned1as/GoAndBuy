@@ -20,11 +20,11 @@ int main(int argc, char *argv[])
     app.setApplicationName("Go And Buy");
     qmlRegisterUncreatableType<SortHelper>("com.adonai.Enums", 1, 0, "BuyItem", "Export enum to QML");
 
-
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + QLocale::system().name(), QLibraryInfo::location(QLibraryInfo::TranslationsPath));
     app.installTranslator(&qtTranslator);
 
+    // in Qt 5.2 this will not be needed
 #ifdef ANDROID
     localeString = "assets:/i18n/" + localeString;
 #else
@@ -99,7 +99,6 @@ JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* /*reserved*/)
     jobject obj1 = env->CallStaticObjectMethod(locale, constr);
     jclass appClass1 = env->GetObjectClass(obj1);
     constr = env->GetMethodID(appClass1, "toString", "()Ljava/lang/String;");
-    // calling method of java.util.Locale object - getLanguage()
     jstring result = (jstring)env->CallObjectMethod(obj1, constr);
     // converting jstring to QString
     const char *strResult = env->GetStringUTFChars(result, 0);

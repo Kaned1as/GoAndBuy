@@ -51,7 +51,7 @@ void AndroidPreferences::restoreParams()
 }
 
 
-void AndroidPreferences::saveValue(const QString name, const QString value)
+void AndroidPreferences::setValue(const QString name, const QString value)
 {
     // search if we have one already
     for(int i = 0; i < prefMap.childNodes().count(); ++i)
@@ -102,12 +102,12 @@ QString AndroidPreferences::buyString() const
 
 void AndroidPreferences::setPhones(const QString newPhones)
 {
-    saveValue("IDs", newPhones);
+    setValue("IDs", newPhones);
     emit phonesChanged(newPhones);
 }
 
 void AndroidPreferences::setBuyString(const QString newBuyString)
 {
-    saveValue("buyString", newBuyString);
+    setValue("buyString", newBuyString);
     emit buyStringChanged(newBuyString);
 }
