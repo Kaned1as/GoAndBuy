@@ -18,70 +18,71 @@ Component {
         border.width: 3
         border.color: Qt.darker("gray")
 
-        RowLayout {
-            anchors.fill: parent
-            anchors.margins: 8
-
-            CheckBox {
-                id: buyItemCheckBox
-                checked: done
-                Layout.alignment: Qt.AlignVCenter
-                style: CheckBoxStyle {
-                    indicator: Rectangle {
-                        implicitWidth: mainWidget.height / 30
-                        implicitHeight: mainWidget.height / 30
-                        radius: mainWidget.height / 200
-                        border.color: control.activeFocus ? "darkblue" : "gray"
-                        border.width: 1
-                        Rectangle {
-                            visible: control.checked
-                            color: "#555"
-                            border.color: "#333"
-                            radius: mainWidget.height / 400
-                            anchors.margins: 4
-                            anchors.fill: parent
-                        }
+        CheckBox {
+            id: buyItemCheckBox
+            anchors.left: parent.left
+            anchors.leftMargin: 8
+            anchors.verticalCenter: parent.verticalCenter
+            checked: done
+            style: CheckBoxStyle {
+                indicator: Rectangle {
+                    implicitWidth: mainWidget.height / 30
+                    implicitHeight: mainWidget.height / 30
+                    radius: mainWidget.height / 200
+                    border.color: control.activeFocus ? "darkblue" : "gray"
+                    border.width: 1
+                    Rectangle {
+                        visible: control.checked
+                        color: "#555"
+                        border.color: "#333"
+                        radius: mainWidget.height / 400
+                        anchors.margins: 4
+                        anchors.fill: parent
                     }
                 }
-
-                onCheckedChanged: {
-                    ItemHandler.setData(index, checked, BuyItem.DoneRole)
-                    if(checked)
-                        ItemHandler.moveToEnd(index)
-                    else
-                        ItemHandler.moveToStart(index)
-                }
             }
 
-            Text {
-                id: buyItemName
-                anchors.left: buyItemCheckBox.right
-                anchors.right: splitter.left
-                horizontalAlignment: Qt.AlignHCenter
-                text: name
-                color: "white"
-                font.bold: true
-                wrapMode: Text.Wrap
+            onCheckedChanged: {
+                ItemHandler.setData(index, checked, BuyItem.DoneRole)
+                if(checked)
+                    ItemHandler.moveToEnd(index)
+                else
+                    ItemHandler.moveToStart(index)
             }
+        }
 
-            Rectangle {
-                id: splitter
-                anchors.right: parent.right
-                anchors.top: parent.top
-                anchors.bottom: parent.bottom
-                anchors.rightMargin: mainWidget.width / 8
-                width: 1
-                color: "black"
-            }
+        Text {
+            id: buyItemName
+            anchors.left: buyItemCheckBox.right
+            anchors.right:  splitter.left
+            anchors.margins: 8
+            anchors.verticalCenter: parent.verticalCenter
+            text: name
+            color: "white"
+            font.bold: true
+            wrapMode: Text.Wrap
+        }
 
-            Text {
-                anchors.left: splitter.right
-                anchors.right: parent.right
-                id: buyItemAmount
-                text: amount
-                font.pointSize: 10
-                horizontalAlignment: Qt.AlignHCenter
-            }
+        Rectangle {
+            id: splitter
+            anchors.right: parent.right
+            anchors.rightMargin: mainWidget.width / 6
+            anchors.top: parent.top
+            anchors.topMargin: 8
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 8
+            width: 1
+            color: "black"
+        }
+
+        Text {
+            id: buyItemAmount
+            anchors.right: parent.right
+            anchors.left: splitter.right
+            anchors.verticalCenter: parent.verticalCenter
+            text: amount
+            font.pointSize: 10
+            horizontalAlignment: Qt.AlignHCenter
         }
 
         MouseArea {
