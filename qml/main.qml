@@ -1,21 +1,14 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
 import QtQuick.Controls.Styles 1.0
+import QtQuick.Layouts 1.0
 
 TabView {
     id: mainWidget
     width: 300
     height: 600
 
-    Rectangle {
-        anchors.fill: parent
-        color: "red"
-        visible: AndroidPrefs.getValue("firstLaunch") !== "0"
-        Component.onCompleted: {
-            AndroidPrefs.setValue("firstLaunch", "0")
-            AndroidPrefs.writeParams()
-        }
-    }
+    FirstLaunchScreen {}
 
     style: TabViewStyle {
         frameOverlap: 1

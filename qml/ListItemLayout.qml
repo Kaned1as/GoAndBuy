@@ -13,7 +13,17 @@ Component {
         height: 40 * mainWidget.height * 0.0025
         opacity: (mainWidget.width - Math.abs(x)) / mainWidget.width
 
-        color: "gray"
+        color: {
+            if(done)
+                return "darkgray"
+
+            switch(priority) {
+               case 1: return "green"
+               case 2: return Qt.darker("yellow")
+               case 3: return Qt.darker("red")
+               }
+        }
+
         radius: mainWidget.height / 100
         border.width: 3
         border.color: Qt.darker("gray")

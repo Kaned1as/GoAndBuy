@@ -10,6 +10,7 @@ GroupBox {
         anchors.fill: parent
 
         ListView {
+            focus: true
             Layout.fillHeight: true
             Layout.fillWidth: true
             model: ItemHandler
@@ -38,6 +39,17 @@ GroupBox {
                 minimumValue: 1
                 Layout.preferredHeight: mainWidget.height / 16
             }
+
+            ComboBox {
+                id: priorityList
+                Layout.preferredHeight: mainWidget.height / 16
+                model: ListModel {
+                    id: lists
+                    ListElement { text: "Low"; priority: 1 }
+                    ListElement { text: "Medium"; priority: 2 }
+                    ListElement { text: "High"; priority: 3 }
+                }
+            }
         }
 
         Button {
@@ -47,7 +59,7 @@ GroupBox {
             Layout.preferredHeight: mainWidget.height / 16
             onClicked: {
                 if(newBuyItemText.text !== "") {
-                    ItemHandler.addBuyItem(newBuyItemText.text, buyItemCount.value)
+                    ItemHandler.addBuyItem(newBuyItemText.text, buyItemCount.value, priorityList.model.get(priorityList.currentIndex).priority)
                     newBuyItemText.text = ""
                 }
             }

@@ -15,13 +15,16 @@ public:
     QString name() const;
     bool done() const;
     quint32 amount() const;
+    quint32 priority() const;
     void setName(QString newName);
     void setDone(bool done);
     void setAmount(quint32 newAmount);
+    void setPriority(quint32 newpriority);
 private:
     QString mName;
     bool mDone;
     quint32 mAmount;
+    quint32 mPriority;
 };
 
 class SortHelper : public QAbstractListModel
@@ -33,11 +36,12 @@ public:
     {
         NameRole = Qt::UserRole + 1,
         DoneRole,
-        AmountRole
+        AmountRole,
+        PriorityRole
     };
 
     explicit SortHelper(AndroidPreferences* prefs = NULL, QObject *parent = 0);
-    Q_INVOKABLE void addBuyItem(QString itemName, quint32 itemCount = 1);
+    Q_INVOKABLE void addBuyItem(QString itemName, quint32 itemCount = 1, quint32 priority = 1);
     Q_INVOKABLE void removeItem(int position);
     Q_INVOKABLE void moveToEnd(int position);
     Q_INVOKABLE void moveToStart(int position);
@@ -47,6 +51,7 @@ public:
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
+    Qt::ItemFlags flags(const QModelIndex & index);
 protected:
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;

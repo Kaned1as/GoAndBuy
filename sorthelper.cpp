@@ -7,11 +7,12 @@ SortHelper::SortHelper(AndroidPreferences* prefs, QObject *parent) :
 {
 }
 
-void SortHelper::addBuyItem(QString itemName, quint32 itemCount)
+void SortHelper::addBuyItem(QString itemName, quint32 itemCount, quint32 priority)
 {
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     BuyItem item(itemName);
     item.setAmount(itemCount > 0 ? itemCount : 1);
+    item.setPriority(priority);
     mItems << item;
     endInsertRows();
 
@@ -114,11 +115,19 @@ bool SortHelper::setData(const QModelIndex &index, const QVariant &value, int ro
         case AmountRole:
             item.setAmount(value.toUInt());
             break;
+        case PriorityRole:
+            item.setPriority(value.toUInt());
+            break;
         default:
             return false;
     }
 
     return true;
+}
+
+Qt::ItemFlags SortHelper::flags(const QModelIndex &index)
+{
+    return Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemNeverHasChildren;
 }
 
 QVariant SortHelper::data(const QModelIndex &index, int role) const
@@ -135,6 +144,8 @@ QVariant SortHelper::data(const QModelIndex &index, int role) const
             return item.done();
         case AmountRole:
             return item.amount();
+        case PriorityRole:
+            return item.priority();
         default:
             return QVariant();
     }
@@ -146,6 +157,7 @@ QHash<int, QByteArray> SortHelper::roleNames() const
     roles[NameRole] = "name";
     roles[DoneRole] = "done";
     roles[AmountRole] = "amount";
+    roles[PriorityRole] = "priority";
     return roles;
 }
 
@@ -210,6 +222,11 @@ quint32 BuyItem::amount() const
     return mAmount;
 }
 
+quint32 BuyItem::priority() const
+{
+    return mPriority;
+}
+
 void BuyItem::setName(QString newName)
 {
     mName = newName;
@@ -223,4 +240,9 @@ void BuyItem::setDone(bool done)
 void BuyItem::setAmount(quint32 newAmount)
 {
     mAmount = newAmount;
+}
+
+void BuyItem::setPriority(quint32 newpriority)
+{
+    mPriority = newpriority;
 }

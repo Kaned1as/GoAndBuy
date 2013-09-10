@@ -1,5 +1,4 @@
 QT += xml widgets
-INCLUDEPATH += /usr/lib/llvm-3.2/lib/clang/3.2/include/
 
 # Add more folders to ship with the application, here
 folder_01.source = qml
