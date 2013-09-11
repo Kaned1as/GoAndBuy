@@ -45,9 +45,9 @@ GroupBox {
                 Layout.preferredHeight: mainWidget.height / 16
                 model: ListModel {
                     id: lists
-                    ListElement { text: "Low"; priority: 1 }
-                    ListElement { text: "Medium"; priority: 2 }
-                    ListElement { text: "High"; priority: 3 }
+                    ListElement { text: QT_TR_NOOP("Low"); priority: 1 }
+                    ListElement { text: QT_TR_NOOP("Medium"); priority: 2 }
+                    ListElement { text: QT_TR_NOOP("High"); priority: 3 }
                 }
             }
         }

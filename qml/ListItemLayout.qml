@@ -55,7 +55,9 @@ Component {
             onCheckedChanged: {
                 ItemHandler.setData(index, checked, BuyItem.DoneRole)
                 if(checked)
+                {
                     ItemHandler.moveToEnd(index)
+                }
                 else
                     ItemHandler.moveToStart(index)
             }
