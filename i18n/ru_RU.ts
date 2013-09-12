@@ -9,7 +9,7 @@
         <translation>Ввод текста вручную</translation>
     </message>
     <message>
-        <location filename="../qml/ByHandTabLayout.qml" line="29"/>
+        <location filename="../qml/ByHandTabLayout.qml" line="30"/>
         <source>Parse</source>
         <translation>Обработать</translation>
     </message>
@@ -17,22 +17,22 @@
 <context>
     <name>FirstLaunchScreen</name>
     <message>
-        <location filename="../qml/FirstLaunchScreen.qml" line="24"/>
+        <location filename="../qml/FirstLaunchScreen.qml" line="79"/>
         <source>This program is designed for people who get their purchases list from wife&apos;s SMS ;) </source>
         <translation>Эта программа предназначена для людей, которые составляют список покупок по СМСкам от жены ;)</translation>
     </message>
     <message>
-        <location filename="../qml/FirstLaunchScreen.qml" line="38"/>
+        <location filename="../qml/FirstLaunchScreen.qml" line="24"/>
         <source>Add items manually with count that you choose</source>
         <translation>Добавляйте элементы вручную с заданным количеством и приоритетом</translation>
     </message>
     <message>
-        <location filename="../qml/FirstLaunchScreen.qml" line="58"/>
+        <location filename="../qml/FirstLaunchScreen.qml" line="44"/>
         <source>Copy text anywhere and navigate to second tab - it will be pasted here automagically, so you have only to click &quot;Parse&quot;</source>
         <translation>Копируйте текст откуда угодно и просто перейдите на вторую вкладку - он будет вставлен автомагически и вам останется только нажать &quot;Обработать&quot;</translation>
     </message>
     <message>
-        <location filename="../qml/FirstLaunchScreen.qml" line="72"/>
+        <location filename="../qml/FirstLaunchScreen.qml" line="58"/>
         <source>Choose desired phone number and string to search for in incoming SMS and wait for the first!</source>
         <translation>Выбирайте желаемый номер телефона и строку для поиска во входящих смс от него - и ждите первого!</translation>
     </message>
@@ -50,22 +50,19 @@
         <translation>Название нового элемента</translation>
     </message>
     <message>
-        <location filename="../qml/ListLayout.qml" line="48"/>
         <source>Low</source>
-        <translation>Низкий</translation>
+        <translation type="obsolete">Низкий</translation>
     </message>
     <message>
-        <location filename="../qml/ListLayout.qml" line="49"/>
         <source>Medium</source>
-        <translation>Средний</translation>
+        <translation type="obsolete">Средний</translation>
     </message>
     <message>
-        <location filename="../qml/ListLayout.qml" line="50"/>
         <source>High</source>
-        <translation>Высокий</translation>
+        <translation type="obsolete">Высокий</translation>
     </message>
     <message>
-        <location filename="../qml/ListLayout.qml" line="57"/>
+        <location filename="../qml/ListLayout.qml" line="51"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
@@ -87,6 +84,29 @@
         <location filename="../qml/PreferencesLayout.qml" line="55"/>
         <source>Buy string</source>
         <translation>Строка для поиска</translation>
+    </message>
+    <message>
+        <location filename="../qml/PreferencesLayout.qml" line="68"/>
+        <source>Items priority for SMS</source>
+        <translation>Приоритет покупок из СМС</translation>
+    </message>
+</context>
+<context>
+    <name>PriorityButton</name>
+    <message>
+        <location filename="../qml/PriorityButton.qml" line="9"/>
+        <source>One day</source>
+        <translation>Как-нибудь</translation>
+    </message>
+    <message>
+        <location filename="../qml/PriorityButton.qml" line="10"/>
+        <source>Today</source>
+        <translation>Сегодня</translation>
+    </message>
+    <message>
+        <location filename="../qml/PriorityButton.qml" line="11"/>
+        <source>Now</source>
+        <translation>Срочно</translation>
     </message>
 </context>
 <context>
@@ -113,17 +133,17 @@
         <translation type="obsolete">Строка для поиска</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="41"/>
+        <location filename="../qml/main.qml" line="40"/>
         <source>List</source>
         <translation>Список</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="47"/>
+        <location filename="../qml/main.qml" line="46"/>
         <source>By hand</source>
         <translation>Вручную</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="53"/>
+        <location filename="../qml/main.qml" line="52"/>
         <source>Parameters</source>
         <translation>Настройки</translation>
     </message>

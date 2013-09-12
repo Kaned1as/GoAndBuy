@@ -12,7 +12,7 @@ void SortHelper::addBuyItem(QString itemName, quint32 itemCount, quint32 priorit
     beginInsertRows(QModelIndex(), rowCount(), rowCount());
     BuyItem item(itemName);
     item.setAmount(itemCount > 0 ? itemCount : 1);
-    item.setPriority(priority);
+    item.setPriority(priority > 0 ? priority : 1);
     mItems << item;
     endInsertRows();
 
@@ -179,7 +179,7 @@ void SortHelper::parseString(QString deliveredText)
                 }
             }
 
-            addBuyItem(itemParsed.join(' '), assumedCount);
+            addBuyItem(itemParsed.join(' '), assumedCount, mPrefs->smsPriority().toUInt());
         }
 }
 
