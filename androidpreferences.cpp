@@ -100,6 +100,11 @@ QString AndroidPreferences::buyString() const
     return getValue("buyString");
 }
 
+QString AndroidPreferences::smsPriority() const
+{
+    return getValue("smsPriority");
+}
+
 void AndroidPreferences::setPhones(const QString newPhones)
 {
     setValue("IDs", newPhones);
@@ -110,4 +115,10 @@ void AndroidPreferences::setBuyString(const QString newBuyString)
 {
     setValue("buyString", newBuyString);
     emit buyStringChanged(newBuyString);
+}
+
+void AndroidPreferences::setSmsPriority(const QString newSmsPriority)
+{
+    setValue("smsPriority", newSmsPriority);
+    emit smsPriorityChanged(newSmsPriority);
 }

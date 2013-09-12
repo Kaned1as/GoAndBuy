@@ -36,16 +36,21 @@ public class SMSReceiveService extends Service
         if(intent != null && intent.hasExtra("number"))
         {
             String[] IDs = preferences.getString("IDs", "").split(";");
+            String[] words = preferences.getString("buyString", "").split(";");
             for (String ID : IDs)
                 if(ID.length() > 1 && intent.getStringExtra("number").endsWith(ID.substring(1))) // +7 / 8 handling
                 {
-                    Intent starter = new Intent(this, QtActivity.class);
-                    starter.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                    starter.putExtra("text", intent.getStringExtra("text"));
-                    //starter.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("number", ID).putExtra("text", intent.getStringExtra("text"));
-                    startActivity(starter);
+                    for(String word : words)
+                        if(word.length() > 1 && intent.getStringExtra("text").toLowerCase().contains(word.toLowerCase()))
+                        {
+                            Intent starter = new Intent(this, QtActivity.class);
+                            starter.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                            starter.putExtra("text", intent.getStringExtra("text"));
+                            startActivity(starter);
+                            return START_STICKY;
+                        }
                 }
         }
-        return START_STICKY;
+        return START_NOT_STICKY;
     }
 }

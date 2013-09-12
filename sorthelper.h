@@ -20,6 +20,8 @@ public:
     void setDone(bool done);
     void setAmount(quint32 newAmount);
     void setPriority(quint32 newpriority);
+
+    bool operator < (BuyItem& second) const;
 private:
     QString mName;
     bool mDone;
@@ -43,15 +45,13 @@ public:
     explicit SortHelper(AndroidPreferences* prefs = NULL, QObject *parent = 0);
     Q_INVOKABLE void addBuyItem(QString itemName, quint32 itemCount = 1, quint32 priority = 1);
     Q_INVOKABLE void removeItem(int position);
-    Q_INVOKABLE void moveToEnd(int position);
-    Q_INVOKABLE void moveToStart(int position);
     Q_INVOKABLE void setData(int position, QVariant value, int role = NameRole);
     Q_INVOKABLE void saveData();
     void restoreData();
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-    Qt::ItemFlags flags(const QModelIndex & index);
+    Q_INVOKABLE void sort();
 protected:
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;

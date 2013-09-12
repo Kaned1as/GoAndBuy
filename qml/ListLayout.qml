@@ -40,15 +40,9 @@ GroupBox {
                 Layout.preferredHeight: mainWidget.height / 16
             }
 
-            ComboBox {
+            PriorityButton {
                 id: priorityList
                 Layout.preferredHeight: mainWidget.height / 16
-                model: ListModel {
-                    id: lists
-                    ListElement { text: QT_TR_NOOP("Low"); priority: 1 }
-                    ListElement { text: QT_TR_NOOP("Medium"); priority: 2 }
-                    ListElement { text: QT_TR_NOOP("High"); priority: 3 }
-                }
             }
         }
 
@@ -59,7 +53,7 @@ GroupBox {
             Layout.preferredHeight: mainWidget.height / 16
             onClicked: {
                 if(newBuyItemText.text !== "") {
-                    ItemHandler.addBuyItem(newBuyItemText.text, buyItemCount.value, priorityList.model.get(priorityList.currentIndex).priority)
+                    ItemHandler.addBuyItem(newBuyItemText.text, buyItemCount.value, priorityList.currentPriority)
                     newBuyItemText.text = ""
                 }
             }

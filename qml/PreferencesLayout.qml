@@ -63,5 +63,30 @@ GroupBox {
                value: buyStringPreference.text
             }
         }
+
+        Text {
+            text: qsTr("Items priority for SMS")
+            horizontalAlignment: Qt.AlignHCenter
+            anchors.left: parent.left
+            anchors.right: parent.right
+        }
+
+        PriorityButton {
+            id: priorityPreference
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: mainWidget.height / 16
+            currentPriority: AndroidPrefs.smsPriority
+
+            onActiveFocusChanged: if(!activeFocus) {
+                AndroidPrefs.writeParams();
+            }
+
+            Binding {
+               target: AndroidPrefs
+               property: "smsPriority"
+               value: priorityPreference.currentPriority
+            }
+        }
     }
 }

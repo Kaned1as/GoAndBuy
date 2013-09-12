@@ -18,6 +18,7 @@ GroupBox {
             id: handInput
             Layout.alignment: Qt.AlignTop
             Layout.preferredHeight: mainWidget.height / 2
+            Layout.fillWidth: true
             verticalAlignment: TextInput.AlignTop
             wrapMode: TextEdit.WordWrap
 
@@ -29,8 +30,8 @@ GroupBox {
             text: qsTr("Parse")
             anchors.top: handInput.bottom
             anchors.topMargin: 10
-            //Layout.preferredHeight: mainWidget.height / 16
-            //Layout.fillWidth: true
+            Layout.preferredHeight: mainWidget.height / 16
+            Layout.fillWidth: true
             onClicked: {
                 ItemHandler.parseString(handInput.text)
                 handInput.text = ""

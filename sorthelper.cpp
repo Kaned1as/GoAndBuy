@@ -16,6 +16,7 @@ void SortHelper::addBuyItem(QString itemName, quint32 itemCount, quint32 priorit
     mItems << item;
     endInsertRows();
 
+    sort();
     saveData();
 }
 
@@ -24,30 +25,6 @@ void SortHelper::removeItem(int position)
     beginRemoveRows(QModelIndex(), position, position);
     mItems.removeAt(position);
     endRemoveRows();
-
-    saveData();
-}
-
-void SortHelper::moveToEnd(int position)
-{
-    if(position == rowCount() - 1)
-        return;
-
-    beginMoveRows(QModelIndex(), position, position, QModelIndex(), rowCount());
-    mItems.move(position, mItems.count() - 1);
-    endMoveRows();
-
-    saveData();
-}
-
-void SortHelper::moveToStart(int position)
-{
-    if(position == 0)
-        return;
-
-    beginMoveRows(QModelIndex(), position, position, QModelIndex(), 0);
-    mItems.move(position, 0);
-    endMoveRows();
 
     saveData();
 }
@@ -122,12 +99,21 @@ bool SortHelper::setData(const QModelIndex &index, const QVariant &value, int ro
             return false;
     }
     emit dataChanged(index, index, QVector<int>(1, role));
+
     return true;
 }
 
-Qt::ItemFlags SortHelper::flags(const QModelIndex &index)
+void SortHelper::sort()
 {
-    return Qt::ItemIsSelectable | Qt::ItemIsEditable | Qt::ItemNeverHasChildren;
+    // this will be very slow
+    for (int passes = 0;  passes < mItems.size() - 1;  ++passes)
+        for (int j = 0;  j < mItems.size() - passes - 1;  ++j)
+            if (mItems[j] < mItems[j+1])
+            {
+                beginMoveRows(QModelIndex(), j, j, QModelIndex(), j + 1 + 1); // as in qt doc
+                mItems.swap(j, j + 1);
+                endMoveRows();
+            }
 }
 
 QVariant SortHelper::data(const QModelIndex &index, int role) const
@@ -245,4 +231,18 @@ void BuyItem::setAmount(quint32 newAmount)
 void BuyItem::setPriority(quint32 newpriority)
 {
     mPriority = newpriority;
+}
+
+bool BuyItem::operator < (BuyItem& second) const
+{
+    if(mDone && !second.mDone)
+        return true;
+
+    if(!mDone && second.mDone)
+        return false;
+
+    if(priority() < second.priority())
+        return true;
+    else
+        return false;
 }

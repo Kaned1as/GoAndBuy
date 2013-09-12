@@ -14,7 +14,6 @@ TabView {
         frameOverlap: 1
         tabsMovable: true
         tab: Rectangle {
-            //color: styleData.selected ? "gray" : "darkgray"
             border.color:  "darkgray"
             implicitWidth: styleData.availableWidth / control.count + 1
             implicitHeight: mainWidget.height / 20

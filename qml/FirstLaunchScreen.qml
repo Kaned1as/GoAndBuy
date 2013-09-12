@@ -12,20 +12,6 @@ Rectangle {
     Component.onCompleted:  AndroidPrefs.setValue("firstLaunch", "0")
 
     Text {
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: mainWidget.height / 5
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.leftMargin: 15
-        anchors.rightMargin: 15
-        color: "white"
-        font.pointSize: 12
-        horizontalAlignment: Qt.AlignHCenter
-        text: qsTr("This program is designed for people who get their purchases list from wife's SMS ;) ")
-        wrapMode: Text.Wrap
-    }
-
-    Text {
         id: leftText
         anchors.right: parent.right
         anchors.rightMargin: mainWidget.width / 6 * 5
@@ -78,6 +64,20 @@ Rectangle {
             NumberAnimation { target: rightText; property: "rotation"; from: -80; to: -100; easing.type: Easing.InOutQuad; duration: 1000 }
             NumberAnimation { target: rightText; property: "rotation"; from: -100; to: -80; easing.type: Easing.InOutQuad; duration: 1000 }
         }
+    }
+
+    Text {
+        anchors.bottom: parent.bottom
+        anchors.bottomMargin: mainWidget.height / 16
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.leftMargin: 15
+        anchors.rightMargin: 15
+        color: "white"
+        font.pointSize: 12
+        horizontalAlignment: Qt.AlignHCenter
+        text: qsTr("This program is designed for people who get their purchases list from wife's SMS ;) ")
+        wrapMode: Text.Wrap
     }
 
     Text {
