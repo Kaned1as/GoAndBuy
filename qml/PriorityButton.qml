@@ -19,7 +19,8 @@ Button {
                 radius: 2
                 gradient: Gradient {
                     GradientStop { position: 0 ; color: control.pressed ? Qt.darker(colorFromPriority()) : colorFromPriority() }
-                    GradientStop { position: 1 ; color: control.pressed ? "#aaa" : "#ddd" }
+                    GradientStop { position: 0.25 ; color: control.pressed ? "#ddd" : "#fff" }
+                    GradientStop { position: 1 ; color: control.pressed ? "#bbb" : "#ddd" }
                 }
             }
         }

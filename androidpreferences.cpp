@@ -48,6 +48,11 @@ void AndroidPreferences::restoreParams()
         prefMap = prefXML.lastChild().toElement();
         settings.close();
     }
+
+    if(buyString().isNull())
+        setBuyString(tr("buy"));
+    if(smsPriority().isNull())
+        setSmsPriority("3");
 }
 
 

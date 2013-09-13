@@ -149,7 +149,7 @@ QHash<int, QByteArray> SortHelper::roleNames() const
 
 void SortHelper::parseString(QString deliveredText)
 {
-    QString buyString = mPrefs ? mPrefs->buyString() : tr("buy");
+    QString buyString = mPrefs->buyString();
 
     int buyStart = deliveredText.indexOf(buyString, 0, Qt::CaseInsensitive);
     if(buyStart == -1)

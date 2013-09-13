@@ -2,6 +2,14 @@
 <!DOCTYPE TS>
 <TS version="2.0" language="ru_RU">
 <context>
+    <name>AndroidPreferences</name>
+    <message>
+        <location filename="../androidpreferences.cpp" line="53"/>
+        <source>buy</source>
+        <translation>купи</translation>
+    </message>
+</context>
+<context>
     <name>ByHandTabLayout</name>
     <message>
         <location filename="../qml/ByHandTabLayout.qml" line="13"/>
