@@ -94,8 +94,8 @@ Rectangle {
     MouseArea {
         anchors.fill: parent
         onClicked: {
-            parent.visible = false
             AndroidPrefs.writeParams()
+            parent.destroy()
         }
     }
 }

@@ -2,6 +2,16 @@
 #include <QDebug>
 #include <QStringList>
 
+QDataStream& operator <<(QDataStream &receiver, const BuyItem &item)
+{
+    receiver << item.name();
+    receiver << item.done();
+    receiver << item.amount();
+    receiver << item.priority();
+
+    return receiver;
+}
+
 SortHelper::SortHelper(AndroidPreferences* prefs, QObject *parent) :
     QAbstractListModel(parent), mPrefs(prefs)
 {
@@ -116,6 +126,29 @@ void SortHelper::sort()
             }
 }
 
+void SortHelper::startSync()
+{
+    QByteArray bytesToSend;
+    QDataStream buyItemsData(&bytesToSend, QIODevice::WriteOnly);
+    for (auto item : mItems)
+        buyItemsData << item;
+
+    mFinder.writeDatagram(bytesToSend, QHostAddress::Broadcast, 17555);
+}
+
+void SortHelper::receiveSync()
+{
+    mFinder.bind(17555, QUdpSocket::ShareAddress);
+    connect(&mFinder, &QUdpSocket::readyRead, this, &SortHelper::handleUdpBroadcast);
+
+}
+
+void SortHelper::stopSync()
+{
+    mFinder.close();
+    disconnect(&mFinder, &QUdpSocket::readyRead, this, &SortHelper::handleUdpBroadcast);
+}
+
 QVariant SortHelper::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= mItems.count())
@@ -145,6 +178,17 @@ QHash<int, QByteArray> SortHelper::roleNames() const
     roles[AmountRole] = "amount";
     roles[PriorityRole] = "priority";
     return roles;
+}
+
+void SortHelper::handleUdpBroadcast()
+{
+    QByteArray datagram;
+    while (mFinder.hasPendingDatagrams())
+    {
+        datagram.resize(mFinder.pendingDatagramSize());
+        mFinder.readDatagram(datagram.data(), datagram.size());
+    }
+    qDebug() << datagram;
 }
 
 void SortHelper::parseString(QString deliveredText)

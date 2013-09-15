@@ -5,10 +5,16 @@
 #include <QSettings>
 #include <QEvent>
 
+#include <QTcpSocket>
+#include <QTcpServer>
+#include <QUdpSocket>
+
 #include "androidpreferences.h"
 
 class BuyItem
 {
+    friend QDataStream& operator << (QDataStream& receiver, const BuyItem& item);
+
 public:
     BuyItem(QString newItemName);
     BuyItem();
@@ -43,27 +49,35 @@ public:
     };
 
     explicit SortHelper(AndroidPreferences* prefs = NULL, QObject *parent = 0);
-    Q_INVOKABLE void addBuyItem(QString itemName, quint32 itemCount = 1, quint32 priority = 1);
-    Q_INVOKABLE void removeItem(int position);
-    Q_INVOKABLE void setData(int position, QVariant value, int role = NameRole);
-    Q_INVOKABLE void saveData();
     void restoreData();
 
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
-    Q_INVOKABLE void sort();
 protected:
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;
 private:
+    void handleUdpBroadcast();
+
     QList<BuyItem> mItems;
     QSettings mSettings;
     AndroidPreferences* mPrefs;
-signals:
-    
+
+    QTcpSocket mSender;
+    QTcpServer mReceiver;
+    QUdpSocket mFinder;
 public slots:
     // this function is never called in desktop versions!
     void parseString(QString deliveredText);
+    void addBuyItem(QString itemName, quint32 itemCount = 1, quint32 priority = 1);
+    void removeItem(int position);
+    void setData(int position, QVariant value, int role = NameRole);
+    void saveData();
+    void sort();
+
+    void startSync();
+    void receiveSync();
+    void stopSync();
 };
 
 #endif // SORTHELPER_H

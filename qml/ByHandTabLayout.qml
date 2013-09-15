@@ -35,7 +35,6 @@ GroupBox {
             onClicked: {
                 ItemHandler.parseString(handInput.text)
                 handInput.text = ""
-                mainWidget.currentIndex = 0
             }
         }
     }

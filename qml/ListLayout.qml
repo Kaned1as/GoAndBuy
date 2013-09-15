@@ -21,7 +21,8 @@ GroupBox {
             move: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
             remove: Transition { NumberAnimation { property: "x"; to: Math.abs(x) / x * mainWidget.width; duration: 500 } }
             removeDisplaced: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
-            moveDisplaced:  Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
+            moveDisplaced: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
+            onCountChanged: mainWidget.currentIndex = 0
         }
 
         RowLayout

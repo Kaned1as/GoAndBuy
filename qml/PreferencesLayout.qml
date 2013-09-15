@@ -88,5 +88,60 @@ GroupBox {
                value: priorityPreference.currentPriority
             }
         }
+
+        Button {
+            id: syncStarter
+            text: qsTr("Send sync to other app")
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: mainWidget.height / 16
+            onClicked: ItemHandler.startSync()
+        }
+
+        Button {
+            id: syncReceiver
+            text: qsTr("Receive sync from other app")
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: mainWidget.height / 16
+            onClicked: {
+                ItemHandler.receiveSync()
+                waiter.visible = true
+            }
+        }
+    }
+
+    Rectangle {
+        id: waiter
+        anchors.fill: parent
+        color: "#AA000000"
+        visible: false
+
+        Rectangle {
+            anchors.centerIn: parent
+            anchors.left: parent.left
+            anchors.right: parent.right
+            color: "white"
+            radius: mainWidget.width / 25
+            height: mainWidget.height / 4
+            width: mainWidget.width / 1.5
+
+            Text {
+                text: qsTr("Please wait...")
+                anchors.centerIn: parent
+            }
+
+            Button {
+                text: qsTr("Cancel")
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                anchors.left: parent.left
+                anchors.margins: mainWidget.width / 50
+                onClicked: {
+                    ItemHandler.stopSync()
+                    waiter.visible = false
+                }
+            }
+        }
     }
 }
