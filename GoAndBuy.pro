@@ -61,7 +61,8 @@ OTHER_FILES += \
     android/version.xml \
     android/AndroidManifest.xml \
     android/src/org/qtproject/qt5/android/bindings/IncomingSmsBroadcastReceiver.java \
-    android/src/org/qtproject/qt5/android/bindings/SMSReceiveService.java
+    android/src/org/qtproject/qt5/android/bindings/SMSReceiveService.java \
+    qml/SyncOptionRadioButton.qml
 
 HEADERS += \
     sorthelper.h \

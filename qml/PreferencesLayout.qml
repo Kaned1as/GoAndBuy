@@ -21,6 +21,7 @@ GroupBox {
 
             ColumnLayout {
                 anchors.fill: parent
+                anchors.topMargin: mainWidget.height / 30
 
                 Text {
                     text: qsTr("Phone number to track")
@@ -96,6 +97,7 @@ GroupBox {
 
             ColumnLayout {
                 anchors.fill: parent
+                anchors.topMargin: mainWidget.height / 30
 
                 Button {
                     id: syncStarter
@@ -118,49 +120,30 @@ GroupBox {
                     onCurrentChanged: AndroidPrefs.writeParams()
                 }
 
-                RadioButton {
+                SyncOptionRadioButton {
                     id: rb1
                     text: qsTr("Replace items")
+                    pointColor: "#F00"
                     Layout.fillWidth: true
+                    syncValue: "1"
                     exclusiveGroup: syncModePreference
-                    onCheckedChanged: if(checked) AndroidPrefs.syncMode = "1"
-
-                    Binding {
-                        target: rb1
-                        property: "checked"
-                        value: true
-                        when: AndroidPrefs.syncMode === "1"
-                    }
                 }
 
-                RadioButton {
-                    id: rb2
+                SyncOptionRadioButton {
+                    pointColor: "#0F0"
                     text: qsTr("Append items")
                     Layout.fillWidth: true
+                    syncValue: "2"
                     exclusiveGroup: syncModePreference
-                    onCheckedChanged: if(checked) AndroidPrefs.syncMode = "2"
 
-                    Binding {
-                        target: rb2
-                        property: "checked"
-                        value: true
-                        when: AndroidPrefs.syncMode === "2"
-                    }
                 }
 
-                RadioButton {
-                    id: rb3
+                SyncOptionRadioButton {
+                    pointColor: "#00F"
                     text: qsTr("Append not existing items")
                     Layout.fillWidth: true
+                    syncValue: "3"
                     exclusiveGroup: syncModePreference
-                    onCheckedChanged: if(checked) AndroidPrefs.syncMode = "3"
-
-                    Binding {
-                        target: rb3
-                        property: "checked"
-                        value: true
-                        when: AndroidPrefs.syncMode === "3"
-                    }
                 }
             }
         }
@@ -169,6 +152,7 @@ GroupBox {
     Rectangle {
         id: waiter
         anchors.fill: parent
+        anchors.margins: -50 // fill all space available
         color: "#AA000000"
         visible: false
 

@@ -2,28 +2,6 @@
 #include <QDebug>
 #include <QStringList>
 
-QDataStream& operator <<(QDataStream &receiver, const BuyItem &item)
-{
-    receiver << item.mName;
-    receiver << item.mDone;
-    receiver << item.mAmount;
-    receiver << item.mPriority;
-
-    return receiver;
-}
-
-QDataStream& operator >> (QDataStream& receiver, BuyItem& item)
-{
-    receiver >> item.mName;
-    receiver >> item.mDone;
-    receiver >> item.mAmount;
-    receiver >> item.mPriority;
-
-    qDebug() << item.mName << item.mDone << item.mAmount << item.mPriority;
-
-    return receiver;
-}
-
 SortHelper::SortHelper(AndroidPreferences* prefs, QObject *parent) :
     QAbstractListModel(parent), mPrefs(prefs)
 {
@@ -168,6 +146,7 @@ void SortHelper::sendSync()
         buyItemsData << item;
 
     mFinder.writeDatagram(bytesToSend, QHostAddress::Broadcast, 17555);
+    mFinder.disconnectFromHost();
 }
 
 void SortHelper::waitSync()
@@ -351,4 +330,27 @@ bool BuyItem::operator ==(const BuyItem &second) const
         return true;
 
     return false;
+}
+
+
+QDataStream& operator <<(QDataStream &receiver, const BuyItem &item)
+{
+    receiver << item.mName;
+    receiver << item.mDone;
+    receiver << item.mAmount;
+    receiver << item.mPriority;
+
+    return receiver;
+}
+
+QDataStream& operator >> (QDataStream& receiver, BuyItem& item)
+{
+    receiver >> item.mName;
+    receiver >> item.mDone;
+    receiver >> item.mAmount;
+    receiver >> item.mPriority;
+
+    qDebug() << item.mName << item.mDone << item.mAmount << item.mPriority;
+
+    return receiver;
 }
