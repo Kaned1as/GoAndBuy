@@ -4,10 +4,22 @@
 
 QDataStream& operator <<(QDataStream &receiver, const BuyItem &item)
 {
-    receiver << item.name();
-    receiver << item.done();
-    receiver << item.amount();
-    receiver << item.priority();
+    receiver << item.mName;
+    receiver << item.mDone;
+    receiver << item.mAmount;
+    receiver << item.mPriority;
+
+    return receiver;
+}
+
+QDataStream& operator >> (QDataStream& receiver, BuyItem& item)
+{
+    receiver >> item.mName;
+    receiver >> item.mDone;
+    receiver >> item.mAmount;
+    receiver >> item.mPriority;
+
+    qDebug() << item.mName << item.mDone << item.mAmount << item.mPriority;
 
     return receiver;
 }
@@ -26,9 +38,18 @@ void SortHelper::addBuyItem(QString itemName, quint32 itemCount, quint32 priorit
     mItems << item;
     endInsertRows();
 
-    sort();
-    saveData();
+    sortAndSave();
 }
+
+void SortHelper::addBuyItem(const BuyItem &item)
+{
+    beginInsertRows(QModelIndex(), rowCount(), rowCount());
+    mItems << item;
+    endInsertRows();
+
+    sortAndSave();
+}
+
 
 void SortHelper::removeItem(int position)
 {
@@ -113,8 +134,11 @@ bool SortHelper::setData(const QModelIndex &index, const QVariant &value, int ro
     return true;
 }
 
-void SortHelper::sort()
+void SortHelper::sortAndSave(int column, Qt::SortOrder order) // just an ordinary bubble-sort
 {
+    Q_UNUSED(column)
+    Q_UNUSED(order)
+
     // this will be very slow
     for (int passes = 0;  passes < mItems.size() - 1;  ++passes)
         for (int j = 0;  j < mItems.size() - passes - 1;  ++j)
@@ -124,10 +148,13 @@ void SortHelper::sort()
                 mItems.swap(j, j + 1);
                 endMoveRows();
             }
+
+    saveData();
 }
 
-void SortHelper::startSync()
+void SortHelper::sendSync()
 {
+    // recursively send all items
     QByteArray bytesToSend;
     QDataStream buyItemsData(&bytesToSend, QIODevice::WriteOnly);
     for (auto item : mItems)
@@ -136,17 +163,39 @@ void SortHelper::startSync()
     mFinder.writeDatagram(bytesToSend, QHostAddress::Broadcast, 17555);
 }
 
-void SortHelper::receiveSync()
+void SortHelper::waitSync()
 {
+    // bind to port and listen till the end
     mFinder.bind(17555, QUdpSocket::ShareAddress);
     connect(&mFinder, &QUdpSocket::readyRead, this, &SortHelper::handleUdpBroadcast);
-
+    emit syncStarted();
 }
 
 void SortHelper::stopSync()
 {
+    // unbind socket and cancel all operations
     mFinder.close();
     disconnect(&mFinder, &QUdpSocket::readyRead, this, &SortHelper::handleUdpBroadcast);
+    emit syncCompleted();
+}
+
+void SortHelper::handleUdpBroadcast()
+{
+    QByteArray datagram;
+    while (mFinder.hasPendingDatagrams())
+    {
+        datagram.resize(mFinder.pendingDatagramSize());
+        mFinder.readDatagram(datagram.data(), datagram.size());
+
+        QDataStream buyItemsData(&datagram, QIODevice::ReadOnly);
+        while(!buyItemsData.atEnd())
+        {
+            BuyItem item;
+            buyItemsData >> item;
+            addBuyItem(item);
+        }
+    }
+    stopSync();
 }
 
 QVariant SortHelper::data(const QModelIndex &index, int role) const
@@ -178,17 +227,6 @@ QHash<int, QByteArray> SortHelper::roleNames() const
     roles[AmountRole] = "amount";
     roles[PriorityRole] = "priority";
     return roles;
-}
-
-void SortHelper::handleUdpBroadcast()
-{
-    QByteArray datagram;
-    while (mFinder.hasPendingDatagrams())
-    {
-        datagram.resize(mFinder.pendingDatagramSize());
-        mFinder.readDatagram(datagram.data(), datagram.size());
-    }
-    qDebug() << datagram;
 }
 
 void SortHelper::parseString(QString deliveredText)

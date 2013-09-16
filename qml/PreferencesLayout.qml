@@ -19,94 +19,97 @@ GroupBox {
             anchors.left: parent.left
             anchors.right: parent.right
         }
-
-        TextField {
-            id: phonesPreference
+        GroupBox {
+            title: qsTr("Main preferences")
             anchors.left: parent.left
             anchors.right: parent.right
-            height: mainWidget.height / 16
-            text: AndroidPrefs.phones
-            validator: RegExpValidator { regExp: /[\d;]+/ }
-            placeholderText: qsTr("Phone number to track")
-            onActiveFocusChanged: if(!activeFocus) {
-                AndroidPrefs.writeParams();
-            }
 
-            Binding {
-               target: AndroidPrefs
-               property: "phones"
-               value: phonesPreference.text
-            }
-        }
+            ColumnLayout {
+                anchors.fill: parent
+                TextField {
+                    id: phonesPreference
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: mainWidget.height / 16
+                    text: AndroidPrefs.phones
+                    validator: RegExpValidator { regExp: /[\d;]+/ }
+                    placeholderText: qsTr("Phone number to track")
+                    onTextChanged: AndroidPrefs.writeParams()
 
-        Text {
-            text: qsTr("Buy string to search for")
-            horizontalAlignment: Qt.AlignHCenter
-            anchors.left: parent.left
-            anchors.right: parent.right
-        }
+                    Binding {
+                       target: AndroidPrefs
+                       property: "phones"
+                       value: phonesPreference.text
+                    }
+                }
 
-        TextField {
-            id: buyStringPreference
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: mainWidget.height / 16
-            text: AndroidPrefs.buyString
-            placeholderText: qsTr("Buy string")
-            onActiveFocusChanged: if(!activeFocus) {
-                AndroidPrefs.writeParams();
-            }
+                Text {
+                    text: qsTr("Buy string to search for")
+                    horizontalAlignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
+                }
 
-            Binding {
-               target: AndroidPrefs
-               property: "buyString"
-               value: buyStringPreference.text
-            }
-        }
+                TextField {
+                    id: buyStringPreference
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: mainWidget.height / 16
+                    text: AndroidPrefs.buyString
+                    placeholderText: qsTr("Buy string")
+                    onTextChanged: AndroidPrefs.writeParams()
 
-        Text {
-            text: qsTr("Items priority for SMS")
-            horizontalAlignment: Qt.AlignHCenter
-            anchors.left: parent.left
-            anchors.right: parent.right
-        }
+                    Binding {
+                       target: AndroidPrefs
+                       property: "buyString"
+                       value: buyStringPreference.text
+                    }
+                }
 
-        PriorityButton {
-            id: priorityPreference
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: mainWidget.height / 16
-            currentPriority: AndroidPrefs.smsPriority
+                Text {
+                    text: qsTr("Items priority for SMS")
+                    horizontalAlignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
+                }
 
-            onActiveFocusChanged: if(!activeFocus) {
-                AndroidPrefs.writeParams();
-            }
+                PriorityButton {
+                    id: priorityPreference
+                    anchors.left: parent.left
+                    anchors.right: parent.right
+                    Layout.preferredHeight: mainWidget.height / 16
+                    currentPriority: AndroidPrefs.smsPriority
 
-            Binding {
-               target: AndroidPrefs
-               property: "smsPriority"
-               value: priorityPreference.currentPriority
+                    onCurrentPriorityChanged: AndroidPrefs.writeParams()
+
+                    Binding {
+                       target: AndroidPrefs
+                       property: "smsPriority"
+                       value: priorityPreference.currentPriority
+                    }
+                }
             }
         }
 
-        Button {
-            id: syncStarter
-            text: qsTr("Send sync to other app")
+        GroupBox {
+            title: qsTr("Items sync preferences")
             anchors.left: parent.left
             anchors.right: parent.right
-            height: mainWidget.height / 16
-            onClicked: ItemHandler.startSync()
-        }
 
-        Button {
-            id: syncReceiver
-            text: qsTr("Receive sync from other app")
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: mainWidget.height / 16
-            onClicked: {
-                ItemHandler.receiveSync()
-                waiter.visible = true
+            ColumnLayout {
+                anchors.fill: parent
+
+                Button {
+                    id: syncStarter
+                    text: qsTr("Send sync to other app")
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: mainWidget.height / 16
+                    onClicked: ItemHandler.sendSync()
+                }
+
+                Button {
+                    id: syncReceiver
+                    text: qsTr("Receive sync from other app")
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: mainWidget.height / 16
+                    onClicked: ItemHandler.waitSync()
+                }
             }
         }
     }
@@ -136,12 +139,27 @@ GroupBox {
                 anchors.bottom: parent.bottom
                 anchors.right: parent.right
                 anchors.left: parent.left
-                anchors.margins: mainWidget.width / 50
-                onClicked: {
-                    ItemHandler.stopSync()
-                    waiter.visible = false
-                }
+                anchors.margins: mainWidget.width / 20
+                onClicked:  ItemHandler.stopSync()
             }
+        }
+
+        onVisibleChanged: {
+            if(visible) smoothAppear.start()
+        }
+
+        NumberAnimation { id: smoothAppear; target: waiter; property: "opacity"; from: 0; to: 1; duration: 1000; easing.type: Easing.OutQuad }
+    }
+
+    Connections {
+        target: ItemHandler;
+        onSyncCompleted: {
+            prefContainer.enabled = true
+            waiter.visible = false
+        }
+        onSyncStarted: {
+            prefContainer.enabled = false
+            waiter.visible = true
         }
     }
 }

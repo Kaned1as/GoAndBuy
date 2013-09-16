@@ -5,8 +5,6 @@
 #include <QSettings>
 #include <QEvent>
 
-#include <QTcpSocket>
-#include <QTcpServer>
 #include <QUdpSocket>
 
 #include "androidpreferences.h"
@@ -14,6 +12,7 @@
 class BuyItem
 {
     friend QDataStream& operator << (QDataStream& receiver, const BuyItem& item);
+    friend QDataStream& operator >> (QDataStream& receiver, BuyItem& item);
 
 public:
     BuyItem(QString newItemName);
@@ -63,21 +62,26 @@ private:
     QSettings mSettings;
     AndroidPreferences* mPrefs;
 
-    QTcpSocket mSender;
-    QTcpServer mReceiver;
     QUdpSocket mFinder;
 public slots:
-    // this function is never called in desktop versions!
+    // data add/remove
     void parseString(QString deliveredText);
     void addBuyItem(QString itemName, quint32 itemCount = 1, quint32 priority = 1);
+    void addBuyItem(const BuyItem& item);
     void removeItem(int position);
-    void setData(int position, QVariant value, int role = NameRole);
-    void saveData();
-    void sort();
 
-    void startSync();
-    void receiveSync();
+    // data manipulations
+    void setData(int position, QVariant value, int role = NameRole);
+    void sortAndSave(int column = 0, Qt::SortOrder order = Qt::DescendingOrder);
+    void saveData();
+
+    // synchronization of items
+    void sendSync();
+    void waitSync();
     void stopSync();
+signals:
+    void syncCompleted();
+    void syncStarted();
 };
 
 #endif // SORTHELPER_H

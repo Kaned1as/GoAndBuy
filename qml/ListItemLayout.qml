@@ -54,7 +54,7 @@ Component {
 
             onCheckedChanged: {
                 ItemHandler.setData(index, checked, BuyItem.DoneRole)
-                ItemHandler.sort()
+                ItemHandler.sortAndSave()
             }
         }
 
@@ -89,6 +89,8 @@ Component {
             anchors.verticalCenter: parent.verticalCenter
             text: amount
             font.pointSize: 10
+            font.bold: true
+            color: "white"
             horizontalAlignment: Qt.AlignHCenter
         }
 
