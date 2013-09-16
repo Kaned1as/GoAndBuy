@@ -11,7 +11,7 @@ GroupBox {
         anchors.fill: parent
         spacing: 5
 
-        add: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutBounce; from: mainWidget.height; duration: 400 } }
+        add: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; from: mainWidget.height; duration: 2000 } }
         move: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
 
         GroupBox {
@@ -100,19 +100,20 @@ GroupBox {
                 anchors.topMargin: mainWidget.height / 30
 
                 Button {
-                    id: syncStarter
-                    text: qsTr("Send sync to other app")
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: mainWidget.height / 16
-                    onClicked: ItemHandler.sendSync()
-                }
-
-                Button {
                     id: syncReceiver
                     text: qsTr("Receive sync from other app")
                     Layout.fillWidth: true
                     Layout.preferredHeight: mainWidget.height / 16
                     onClicked: ItemHandler.waitSync()
+                }
+
+                Button {
+                    enabled: syncModePreference.current != undefined
+                    id: syncStarter
+                    text: qsTr("Send sync to other app")
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: mainWidget.height / 16
+                    onClicked: ItemHandler.sendSync()
                 }
 
                 ExclusiveGroup {

@@ -31,7 +31,7 @@ Component {
         CheckBox {
             id: buyItemCheckBox
             anchors.left: parent.left
-            anchors.leftMargin: 8
+            anchors.leftMargin: mainWidget.width / 30
             anchors.verticalCenter: parent.verticalCenter
             checked: done
             style: CheckBoxStyle {

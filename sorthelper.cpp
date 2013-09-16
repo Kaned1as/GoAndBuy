@@ -142,6 +142,9 @@ void SortHelper::sendSync()
     // recursively send all items
     QByteArray bytesToSend;
     QDataStream buyItemsData(&bytesToSend, QIODevice::WriteOnly);
+
+    buyItemsData << mPrefs->syncMode().toUInt();
+
     for (auto item : mItems)
         buyItemsData << item;
 
@@ -175,7 +178,10 @@ void SortHelper::handleUdpBroadcast()
 
         QDataStream buyItemsData(&datagram, QIODevice::ReadOnly);
 
-        if(mPrefs->syncMode() == "1")
+        uint syncMode;
+        buyItemsData >> syncMode;
+
+        if(syncMode == 1)
             clearItems();
 
         while(!buyItemsData.atEnd())
@@ -183,7 +189,7 @@ void SortHelper::handleUdpBroadcast()
             BuyItem item;
             buyItemsData >> item;
 
-            if(mPrefs->syncMode() != "3" || !mItems.contains(item))
+            if(syncMode != 3 || !mItems.contains(item))
                 addBuyItem(item);
         }
     }
