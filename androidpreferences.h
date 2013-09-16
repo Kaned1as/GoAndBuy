@@ -14,6 +14,7 @@ public:
     Q_PROPERTY(QString phones READ phones WRITE setPhones NOTIFY phonesChanged STORED false)
     Q_PROPERTY(QString buyString READ buyString WRITE setBuyString NOTIFY buyStringChanged STORED false)
     Q_PROPERTY(QString smsPriority READ smsPriority WRITE setSmsPriority NOTIFY smsPriorityChanged STORED false)
+    Q_PROPERTY(QString syncMode READ syncMode WRITE setSyncMode NOTIFY syncModeChanged STORED false)
 
     // this functions are never called in desktop versions!
     Q_INVOKABLE void writeParams() const;
@@ -24,9 +25,11 @@ public:
     QString phones() const;
     QString buyString() const;
     QString smsPriority() const;
+    QString syncMode() const;
     void setPhones(const QString newPhones);
     void setBuyString(const QString newBuyString);
     void setSmsPriority(const QString newSmsPriority);
+    void setSyncMode(const QString newSyncMode);
 private:
     QDomDocument prefXML;
     QDomElement prefMap;
@@ -34,6 +37,7 @@ signals:
     void phonesChanged(QString);
     void buyStringChanged(QString);
     void smsPriorityChanged(QString);
+    void syncModeChanged(QString);
 };
 
 #endif // ANDROIDPREFERENCES_H

@@ -60,6 +60,13 @@ void SortHelper::removeItem(int position)
     saveData();
 }
 
+void SortHelper::clearItems()
+{
+    beginResetModel();
+    mItems.clear();
+    endResetModel();
+}
+
 void SortHelper::saveData()
 {
     mSettings.beginGroup("Stored");
@@ -188,11 +195,17 @@ void SortHelper::handleUdpBroadcast()
         mFinder.readDatagram(datagram.data(), datagram.size());
 
         QDataStream buyItemsData(&datagram, QIODevice::ReadOnly);
+
+        if(mPrefs->syncMode() == "1")
+            clearItems();
+
         while(!buyItemsData.atEnd())
         {
             BuyItem item;
             buyItemsData >> item;
-            addBuyItem(item);
+
+            if(mPrefs->syncMode() != "3" || !mItems.contains(item))
+                addBuyItem(item);
         }
     }
     stopSync();
@@ -315,7 +328,7 @@ void BuyItem::setPriority(quint32 newpriority)
     mPriority = newpriority;
 }
 
-bool BuyItem::operator < (BuyItem& second) const
+bool BuyItem::operator < (const BuyItem &second) const
 {
     if(mDone && !second.mDone)
         return true;
@@ -327,4 +340,15 @@ bool BuyItem::operator < (BuyItem& second) const
         return true;
     else
         return false;
+}
+
+bool BuyItem::operator ==(const BuyItem &second) const
+{
+    if(mName == second.mName &&
+       mDone == second.mDone &&
+       mAmount == second.mAmount &&
+       mPriority == second.mPriority)
+        return true;
+
+    return false;
 }

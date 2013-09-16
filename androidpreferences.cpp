@@ -110,6 +110,11 @@ QString AndroidPreferences::smsPriority() const
     return getValue("smsPriority");
 }
 
+QString AndroidPreferences::syncMode() const
+{
+    return getValue("syncMode");
+}
+
 void AndroidPreferences::setPhones(const QString newPhones)
 {
     setValue("IDs", newPhones);
@@ -126,4 +131,10 @@ void AndroidPreferences::setSmsPriority(const QString newSmsPriority)
 {
     setValue("smsPriority", newSmsPriority);
     emit smsPriorityChanged(newSmsPriority);
+}
+
+void AndroidPreferences::setSyncMode(const QString newSyncMode)
+{
+    setValue("syncMode", newSyncMode);
+    emit syncModeChanged(newSyncMode);
 }

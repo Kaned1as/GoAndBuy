@@ -53,7 +53,7 @@
 <context>
     <name>ListLayout</name>
     <message>
-        <location filename="../qml/ListLayout.qml" line="31"/>
+        <location filename="../qml/ListLayout.qml" line="32"/>
         <source>New item name</source>
         <translation>Название нового элемента</translation>
     </message>
@@ -70,7 +70,7 @@
         <translation type="obsolete">Высокий</translation>
     </message>
     <message>
-        <location filename="../qml/ListLayout.qml" line="51"/>
+        <location filename="../qml/ListLayout.qml" line="52"/>
         <source>Add</source>
         <translation>Добавить</translation>
     </message>
@@ -78,25 +78,72 @@
 <context>
     <name>PreferencesLayout</name>
     <message>
-        <location filename="../qml/PreferencesLayout.qml" line="17"/>
-        <location filename="../qml/PreferencesLayout.qml" line="30"/>
+        <location filename="../qml/PreferencesLayout.qml" line="18"/>
+        <source>Main preferences</source>
+        <translation>Основные настройки</translation>
+    </message>
+    <message>
+        <location filename="../qml/PreferencesLayout.qml" line="26"/>
+        <location filename="../qml/PreferencesLayout.qml" line="37"/>
         <source>Phone number to track</source>
         <translation>Отслеживаемый номер телефона (без +7)</translation>
     </message>
     <message>
-        <location filename="../qml/PreferencesLayout.qml" line="43"/>
+        <location filename="../qml/PreferencesLayout.qml" line="48"/>
         <source>Buy string to search for</source>
         <translation>Слово для поиска в СМС</translation>
     </message>
     <message>
-        <location filename="../qml/PreferencesLayout.qml" line="55"/>
+        <location filename="../qml/PreferencesLayout.qml" line="58"/>
         <source>Buy string</source>
         <translation>Строка для поиска</translation>
     </message>
     <message>
-        <location filename="../qml/PreferencesLayout.qml" line="68"/>
+        <location filename="../qml/PreferencesLayout.qml" line="69"/>
         <source>Items priority for SMS</source>
         <translation>Приоритет покупок из СМС</translation>
+    </message>
+    <message>
+        <location filename="../qml/PreferencesLayout.qml" line="93"/>
+        <source>Items sync preferences</source>
+        <translation>Настройки синхронизации покупок</translation>
+    </message>
+    <message>
+        <location filename="../qml/PreferencesLayout.qml" line="102"/>
+        <source>Send sync to other app</source>
+        <translatorcomment>Не знаю, как точно перевести это</translatorcomment>
+        <translation>Отправить покупки</translation>
+    </message>
+    <message>
+        <location filename="../qml/PreferencesLayout.qml" line="110"/>
+        <source>Receive sync from other app</source>
+        <translatorcomment>Не знаю, как точно перевести это</translatorcomment>
+        <translation>Синхронизировать покупки</translation>
+    </message>
+    <message>
+        <location filename="../qml/PreferencesLayout.qml" line="123"/>
+        <source>Replace items</source>
+        <translation>Заменить существующие новыми</translation>
+    </message>
+    <message>
+        <location filename="../qml/PreferencesLayout.qml" line="138"/>
+        <source>Append items</source>
+        <translation>Добавить новые к существующим</translation>
+    </message>
+    <message>
+        <location filename="../qml/PreferencesLayout.qml" line="153"/>
+        <source>Append not existing items</source>
+        <translation>Добавить только отсутствующие</translation>
+    </message>
+    <message>
+        <location filename="../qml/PreferencesLayout.qml" line="185"/>
+        <source>Please wait...</source>
+        <translation>Нажмите кнопку отправки на втором приложении...</translation>
+    </message>
+    <message>
+        <location filename="../qml/PreferencesLayout.qml" line="193"/>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>

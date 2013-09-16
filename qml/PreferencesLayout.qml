@@ -13,12 +13,7 @@ GroupBox {
 
         add: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutBounce; from: mainWidget.height; duration: 400 } }
         move: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
-        Text {
-            text: qsTr("Phone number to track")
-            horizontalAlignment: Qt.AlignHCenter
-            anchors.left: parent.left
-            anchors.right: parent.right
-        }
+
         GroupBox {
             title: qsTr("Main preferences")
             anchors.left: parent.left
@@ -26,6 +21,13 @@ GroupBox {
 
             ColumnLayout {
                 anchors.fill: parent
+
+                Text {
+                    text: qsTr("Phone number to track")
+                    horizontalAlignment: Qt.AlignHCenter
+                    Layout.fillWidth: true
+                }
+
                 TextField {
                     id: phonesPreference
                     Layout.fillWidth: true
@@ -110,6 +112,56 @@ GroupBox {
                     Layout.preferredHeight: mainWidget.height / 16
                     onClicked: ItemHandler.waitSync()
                 }
+
+                ExclusiveGroup {
+                    id: syncModePreference
+                    onCurrentChanged: AndroidPrefs.writeParams()
+                }
+
+                RadioButton {
+                    id: rb1
+                    text: qsTr("Replace items")
+                    Layout.fillWidth: true
+                    exclusiveGroup: syncModePreference
+                    onCheckedChanged: if(checked) AndroidPrefs.syncMode = "1"
+
+                    Binding {
+                        target: rb1
+                        property: "checked"
+                        value: true
+                        when: AndroidPrefs.syncMode === "1"
+                    }
+                }
+
+                RadioButton {
+                    id: rb2
+                    text: qsTr("Append items")
+                    Layout.fillWidth: true
+                    exclusiveGroup: syncModePreference
+                    onCheckedChanged: if(checked) AndroidPrefs.syncMode = "2"
+
+                    Binding {
+                        target: rb2
+                        property: "checked"
+                        value: true
+                        when: AndroidPrefs.syncMode === "2"
+                    }
+                }
+
+                RadioButton {
+                    id: rb3
+                    text: qsTr("Append not existing items")
+                    Layout.fillWidth: true
+                    exclusiveGroup: syncModePreference
+                    onCheckedChanged: if(checked) AndroidPrefs.syncMode = "3"
+
+                    Binding {
+                        target: rb3
+                        property: "checked"
+                        value: true
+                        when: AndroidPrefs.syncMode === "3"
+                    }
+                }
             }
         }
     }
@@ -131,7 +183,10 @@ GroupBox {
 
             Text {
                 text: qsTr("Please wait...")
-                anchors.centerIn: parent
+                anchors.fill: parent
+                horizontalAlignment: Qt.AlignHCenter
+                verticalAlignment: Qt.AlignVCenter
+                wrapMode: Text.WordWrap
             }
 
             Button {
@@ -152,7 +207,7 @@ GroupBox {
     }
 
     Connections {
-        target: ItemHandler;
+        target: ItemHandler
         onSyncCompleted: {
             prefContainer.enabled = true
             waiter.visible = false

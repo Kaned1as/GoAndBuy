@@ -26,7 +26,8 @@ public:
     void setAmount(quint32 newAmount);
     void setPriority(quint32 newpriority);
 
-    bool operator < (BuyItem& second) const;
+    bool operator < (const BuyItem& second) const;
+    bool operator == (const BuyItem& second) const;
 private:
     QString mName;
     bool mDone;
@@ -69,6 +70,7 @@ public slots:
     void addBuyItem(QString itemName, quint32 itemCount = 1, quint32 priority = 1);
     void addBuyItem(const BuyItem& item);
     void removeItem(int position);
+    void clearItems();
 
     // data manipulations
     void setData(int position, QVariant value, int role = NameRole);
