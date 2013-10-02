@@ -150,45 +150,9 @@ GroupBox {
         }
     }
 
-    Rectangle {
+    ButtonDialog {
         id: waiter
-        anchors.fill: parent
-        anchors.margins: -50 // fill all space available
-        color: "#AA000000"
-        visible: false
-
-        Rectangle {
-            anchors.centerIn: parent
-            anchors.left: parent.left
-            anchors.right: parent.right
-            color: "white"
-            radius: mainWidget.width / 25
-            height: mainWidget.height / 4
-            width: mainWidget.width / 1.5
-
-            Text {
-                text: qsTr("Please wait...")
-                anchors.fill: parent
-                horizontalAlignment: Qt.AlignHCenter
-                verticalAlignment: Qt.AlignVCenter
-                wrapMode: Text.WordWrap
-            }
-
-            Button {
-                text: qsTr("Cancel")
-                anchors.bottom: parent.bottom
-                anchors.right: parent.right
-                anchors.left: parent.left
-                anchors.margins: mainWidget.width / 20
-                onClicked:  ItemHandler.stopSync()
-            }
-        }
-
-        onVisibleChanged: {
-            if(visible) smoothAppear.start()
-        }
-
-        NumberAnimation { id: smoothAppear; target: waiter; property: "opacity"; from: 0; to: 1; duration: 1000; easing.type: Easing.OutQuad }
+        onClicked: ItemHandler.stopSync()
     }
 
     Connections {

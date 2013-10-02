@@ -23,6 +23,11 @@ GroupBox {
             wrapMode: TextEdit.WordWrap
 
             onActiveFocusChanged: if(text.length == 0) text = ClipboardAdapter.getText()
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: pasteDialog.visible = true;
+            }
         }
 
         Button {
@@ -37,5 +42,12 @@ GroupBox {
                 handInput.text = ""
             }
         }
+    }
+
+    ButtonDialog {
+        id: pasteDialog;
+        dialogText: qsTr("Paste from clipboard?")
+        buttonText: qsTr("Paste")
+        onClicked: { pasteDialog.visible = false; handInput.append(ClipboardAdapter.getText()) }
     }
 }
