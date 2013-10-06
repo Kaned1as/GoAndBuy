@@ -42,14 +42,14 @@ TabView {
 
             Column {
                 anchors.centerIn: parent
-                spacing: mainWidget.width / 300 * 2
+                spacing: mainWidget.height * 2 / 600
                 Repeater {
                     model: 3
 
                     Rectangle {
                         color: "darkgray"
-                        width: mainWidget.width / 300 * 7
-                        height: mainWidget.width / 300 * 7
+                        width: mainWidget.height * 7 / 600
+                        height: mainWidget.height * 7 / 600
                     }
                 }
             }
@@ -96,7 +96,7 @@ TabView {
         Rectangle {
             id: deleteAll
             Layout.fillWidth: true
-            height: mainWidget.height / 600 * 50
+            Layout.preferredHeight: mainWidget.height * 50 / 600
             color: "black"
             border.color: "grey"
             border.width: 2
