@@ -6,6 +6,10 @@ GroupBox {
     anchors.fill: parent
     anchors.margins: mainWidget.height / 100
 
+    ListItemLayout {
+        id: lil
+    }
+
     ColumnLayout {
         anchors.fill: parent
 
@@ -19,9 +23,12 @@ GroupBox {
             clip: true
             add: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutBounce; from: mainWidget.height; duration: 1000 } }
             move: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
-            remove: Transition { NumberAnimation { property: "x"; to: Math.abs(x) / x * mainWidget.width; duration: 500 } }
+            remove: Transition { NumberAnimation { property: "x"; to: mainWidget.width; duration: 500 } }
+
+            displaced: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
             removeDisplaced: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
             moveDisplaced: Transition { NumberAnimation { property: "y"; easing.type: Easing.OutElastic; duration: 2000 } }
+
             onCountChanged: mainWidget.currentIndex = 0
         }
 

@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.0
+import QtQuick.Controls.Styles 1.0
 import QtQuick.Layouts 1.0
 
 GroupBox {
@@ -7,7 +8,10 @@ GroupBox {
     anchors.margins: mainWidget.height / 100
 
     ColumnLayout {
-        anchors.fill: parent
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        spacing: mainWidget.height / 60
 
         Text {
             text: qsTr("Provide input by hand")
@@ -26,20 +30,40 @@ GroupBox {
 
             MouseArea {
                 anchors.fill: parent
-                onClicked: pasteDialog.visible = true;
+                onPressAndHold: pasteDialog.visible = true;
             }
         }
 
         Button {
             focus: true
             text: qsTr("Parse")
-            anchors.top: handInput.bottom
-            anchors.topMargin: 10
             Layout.preferredHeight: mainWidget.height / 16
             Layout.fillWidth: true
             onClicked: {
-                ItemHandler.parseString(handInput.text)
+                ItemHandler.parseString(handInput.text, findWord.checked)
                 handInput.text = ""
+            }
+        }
+
+        CheckBox {
+            id: findWord
+            text: qsTr("Search for buy string?")
+            style: CheckBoxStyle {
+                indicator: Rectangle {
+                    implicitWidth: mainWidget.height / 30
+                    implicitHeight: mainWidget.height / 30
+                    radius: mainWidget.height / 200
+                    border.color: control.activeFocus ? "darkblue" : "gray"
+                    border.width: 1
+                    Rectangle {
+                        visible: control.checked
+                        color: "#555"
+                        border.color: "#333"
+                        radius: mainWidget.height / 400
+                        anchors.margins: 4
+                        anchors.fill: parent
+                    }
+                }
             }
         }
     }

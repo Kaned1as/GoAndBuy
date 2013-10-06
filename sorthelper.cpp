@@ -38,6 +38,13 @@ void SortHelper::removeItem(int position)
     saveData();
 }
 
+void SortHelper::removeAll()
+{
+    beginRemoveRows(QModelIndex(), 0, rowCount() - 1);
+    mItems.clear();
+    endRemoveRows();
+}
+
 void SortHelper::clearItems()
 {
     beginResetModel();
@@ -227,14 +234,18 @@ QHash<int, QByteArray> SortHelper::roleNames() const
     return roles;
 }
 
-void SortHelper::parseString(QString deliveredText)
+void SortHelper::parseString(QString deliveredText, bool findBuyString)
 {
     QString buyString = mPrefs->buyString();
 
-    int buyStart = deliveredText.indexOf(buyString, 0, Qt::CaseInsensitive);
-    if(buyStart == -1)
-        return;
-    buyStart += buyString.length(); // real start point
+    int buyStart = 0;
+    if(findBuyString)
+    {
+        buyStart = deliveredText.indexOf(buyString, 0, Qt::CaseInsensitive);
+        if(buyStart == -1)
+            return;
+        buyStart += buyString.length(); // real start point
+    }
 
     int buyEnd = deliveredText.indexOf(QRegExp("[.!\?]"), buyStart);
     if(buyEnd == - 1)

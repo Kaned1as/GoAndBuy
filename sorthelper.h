@@ -66,10 +66,11 @@ private:
     QUdpSocket mFinder;
 public slots:
     // data add/remove
-    void parseString(QString deliveredText);
+    void parseString(QString deliveredText, bool findBuyString = true);
     void addBuyItem(QString itemName, quint32 itemCount = 1, quint32 priority = 1);
     void addBuyItem(const BuyItem& item);
     void removeItem(int position);
+    void removeAll();
     void clearItems();
 
     // data manipulations

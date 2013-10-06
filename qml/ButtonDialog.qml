@@ -44,5 +44,5 @@ Rectangle {
         if(visible) smoothAppear.start()
     }
 
-    NumberAnimation { id: smoothAppear; target: buttonDialog; property: "opacity"; from: 0; to: 1; duration: 1000; easing.type: Easing.OutQuad }
+    NumberAnimation { id: smoothAppear; target: buttonDialog; property: "opacity"; from: 0; to: 1; duration: 300; easing.type: Easing.OutQuad }
 }
